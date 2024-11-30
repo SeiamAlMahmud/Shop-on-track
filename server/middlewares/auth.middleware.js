@@ -86,12 +86,10 @@ const tokenValidationMiddleware = async (req, res, next) => {
     req.user = { userId: user._id, role: decodedRefreshToken.role }; // Attach user info to the request
     next();
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: 'Token validation failed. Please log in again.',
-        error: error.message,
-      });
+    res.status(500).json({
+      message: 'Token validation failed. Please log in again.',
+      error: error.message,
+    });
   }
 };
 

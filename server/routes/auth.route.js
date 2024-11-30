@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const {
   registration,
   refreshAccessToken,
+  login,
 } = require('../controllers/auth.controller');
 const tokenValidationMiddleware = require('../middlewares/auth.middleware');
 
@@ -11,6 +12,8 @@ const router = express.Router();
 
 // Signup
 router.post('/signup/:role', registration);
+// SignIn
+router.post('/login/:role', login);
 // router.post("/signup/:role", registration)
 router.post('/refresh', refreshAccessToken);
 router.post('/get-data', tokenValidationMiddleware, async (req, res) => {

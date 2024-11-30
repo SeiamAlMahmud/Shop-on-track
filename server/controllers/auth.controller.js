@@ -1,6 +1,7 @@
 const courierModel = require('../models/courier.model');
 const customerModel = require('../models/customer.model');
 const sellerModel = require('../models/seller.model');
+const bcrypt = require('bcrypt');
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -46,13 +47,11 @@ const registration = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        token: accessToken,
-        message: 'User created successfully',
-      });
+    res.status(201).json({
+      success: true,
+      token: accessToken,
+      message: 'User created successfully',
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
@@ -115,6 +114,7 @@ const login = async (req, res) => {
       .status(200)
       .json({ success: true, token: accessToken, message: 'Login successful' });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
