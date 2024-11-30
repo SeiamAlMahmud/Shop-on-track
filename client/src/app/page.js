@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import CardSection from '@/components/CardSection';
 import HeroSection from '@/components/HeroSection';
 import { useShopContext } from '@/context/ShopContext';
@@ -8,9 +8,7 @@ export default function Home() {
   const { authState, setAuthState } = useShopContext(); // Use the custom hook here
   console.log(authState);
 
-
   return (
-
     <>
       <HeroSection />
       <CardSection />

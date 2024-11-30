@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { createContext, useContext, useState } from 'react';
 
 // Create a Context
@@ -11,7 +11,9 @@ export const ShopProvider = ({ children }) => {
   // You can add more logic to manage your auth state (login, logout, etc.)
   const contain = { authState, setAuthState };
   return (
-    <ShopContext.Provider value={contain}> {/* Use ShopContext.Provider here */}
+    <ShopContext.Provider value={contain}>
+      {' '}
+      {/* Use ShopContext.Provider here */}
       {children}
     </ShopContext.Provider>
   );
