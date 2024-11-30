@@ -10,18 +10,17 @@ import Link from 'next/link';
 
 const ResponsiveNavbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  
 
   return (
     <Container>
       <nav className="flex items-center justify-between w-full relative bg-white boxShadow rounded-full px-[10px] py-[8px]">
         <Link href="/">
-        <Image
-        width={55}
-        height={65}
-          src="https://i.ibb.co/0BZfPq6/darklogo.png"
-          alt="logo"
-        />
+          <Image
+            width={55}
+            height={65}
+            src="https://i.ibb.co/0BZfPq6/darklogo.png"
+            alt="logo"
+          />
         </Link>
         <ul className="items-center gap-[20px] text-[1rem] text-[#424242] lg:flex hidden">
           <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
@@ -39,11 +38,11 @@ const ResponsiveNavbar = () => {
         </ul>
 
         <div className="items-center gap-[10px] flex">
-         <Link href={"/auth/login"}>
-          <button className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#3B9DF8] text-white hover:bg-blue-400 transition-all duration-300 sm:flex ">
-            Sign In
-          </button>
-         </Link>
+          <Link href={'/auth/login'}>
+            <button className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#3B9DF8] text-white hover:bg-blue-400 transition-all duration-300 sm:flex ">
+              Sign In
+            </button>
+          </Link>
 
           <CiMenuFries
             className="text-[1.8rem] mr-1 text-[#424242]c cursor-pointer lg:hidden flex"
