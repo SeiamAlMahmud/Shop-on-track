@@ -1,4 +1,5 @@
 'use client';
+import axios from 'axios';
 import { createContext, useContext, useState } from 'react';
 
 // Create a Context
@@ -8,8 +9,17 @@ const ShopContext = createContext();
 export const ShopProvider = ({ children }) => {
   const [authState, setAuthState] = useState(125);
 
+
+const api = axios.create({
+  baseURL: 'http://localhost:5000', // Replace with your backend base URL
+  withCredentials: true, // Enables sending cookies with requests
+  headers: {
+    'Content-Type': 'application/json', // Default header
+  },
+});
+
   // You can add more logic to manage your auth state (login, logout, etc.)
-  const contain = { authState, setAuthState };
+  const contain = { authState, setAuthState, api };
   return (
     <ShopContext.Provider value={contain}>
       {' '}

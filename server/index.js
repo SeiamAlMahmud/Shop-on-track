@@ -1,5 +1,5 @@
 const express = require('express');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const path = require('path');
@@ -11,9 +11,10 @@ const userRoute = require('./routes/auth.route');
 
 connectDB();
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://mdoc.almahmud.top'], // Add your frontend URLs
+  origin: (['http://localhost:3000']), // Add your frontend URLs
   methods: ['GET', 'POST'], // Specify allowed HTTP methods
   allowedHeaders: ['Authorization', 'Content-Type'], // Allow the Authorization header for Bearer token
+  credentials: true, // Allow cookies to be sent
 };
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
