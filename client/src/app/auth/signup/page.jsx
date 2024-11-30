@@ -1,11 +1,11 @@
-"use client"
+'use client';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useShopContext } from '@/context/ShopContext';
 
 const Signup = () => {
-    const {api} = useShopContext();
+  const { api } = useShopContext();
   const [userType, setUserType] = useState('customer'); // Default user type
   const [formData, setFormData] = useState({}); // Dynamic form data
 
@@ -14,10 +14,25 @@ const Signup = () => {
     customer: [
       { name: 'fullName', label: 'Full Name', type: 'text', required: true },
       { name: 'email', label: 'Email', type: 'email', required: true },
-      { name: 'phoneNumber', label: 'Phone Number', type: 'text', required: true },
+      {
+        name: 'phoneNumber',
+        label: 'Phone Number',
+        type: 'text',
+        required: true,
+      },
       { name: 'password', label: 'Password', type: 'password', required: true },
-      { name: 'confirmPassword', label: 'Confirm Password', type: 'password', required: true },
-      { name: 'shippingAddress', label: 'Shipping Address', type: 'text', required: true },
+      {
+        name: 'confirmPassword',
+        label: 'Confirm Password',
+        type: 'password',
+        required: true,
+      },
+      {
+        name: 'shippingAddress',
+        label: 'Shipping Address',
+        type: 'text',
+        required: true,
+      },
       {
         name: 'gender',
         label: 'Gender',
@@ -30,27 +45,102 @@ const Signup = () => {
     seller: [
       { name: 'fullName', label: 'Full Name', type: 'text', required: true },
       { name: 'email', label: 'Email', type: 'email', required: true },
-      { name: 'phoneNumber', label: 'Phone Number', type: 'text', required: true },
+      {
+        name: 'phoneNumber',
+        label: 'Phone Number',
+        type: 'text',
+        required: true,
+      },
       { name: 'password', label: 'Password', type: 'password', required: true },
-      { name: 'confirmPassword', label: 'Confirm Password', type: 'password', required: true },
-      { name: 'businessName', label: 'Business Name', type: 'text', required: true },
-      { name: 'businessLicense', label: 'Business License', type: 'text', required: true },
-      { name: 'bankAccountDetails', label: 'Bank Account Details', type: 'text', required: true },
+      {
+        name: 'confirmPassword',
+        label: 'Confirm Password',
+        type: 'password',
+        required: true,
+      },
+      {
+        name: 'businessName',
+        label: 'Business Name',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'businessLicense',
+        label: 'Business License',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'bankAccountDetails',
+        label: 'Bank Account Details',
+        type: 'text',
+        required: true,
+      },
     ],
     courier: [
       { name: 'fullName', label: 'Full Name', type: 'text', required: true },
       { name: 'email', label: 'Email', type: 'email', required: true },
-      { name: 'phoneNumber', label: 'Phone Number', type: 'text', required: true },
+      {
+        name: 'phoneNumber',
+        label: 'Phone Number',
+        type: 'text',
+        required: true,
+      },
       { name: 'password', label: 'Password', type: 'password', required: true },
-      { name: 'confirmPassword', label: 'Confirm Password', type: 'password', required: true },
-      { name: 'businessName', label: 'Business Name', type: 'text', required: true },
-      { name: 'businessLicense', label: 'Business License', type: 'text', required: true },
-      { name: 'bankAccountDetails', label: 'Bank Account Details', type: 'text', required: true },
-      { name: 'serviceArea', label: 'Service Area', type: 'text', required: true },
-      { name: 'vehicleType', label: 'Vehicle Type', type: 'text', required: true },
-      { name: 'vehicleRegistrationNumber', label: 'Vehicle Registration Number', type: 'text', required: true },
-      { name: 'driverLicense', label: 'Driver License', type: 'text', required: true },
-      { name: 'deliveryCapacity', label: 'Delivery Capacity', type: 'number', required: true },
+      {
+        name: 'confirmPassword',
+        label: 'Confirm Password',
+        type: 'password',
+        required: true,
+      },
+      {
+        name: 'businessName',
+        label: 'Business Name',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'businessLicense',
+        label: 'Business License',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'bankAccountDetails',
+        label: 'Bank Account Details',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'serviceArea',
+        label: 'Service Area',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'vehicleType',
+        label: 'Vehicle Type',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'vehicleRegistrationNumber',
+        label: 'Vehicle Registration Number',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'driverLicense',
+        label: 'Driver License',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'deliveryCapacity',
+        label: 'Delivery Capacity',
+        type: 'number',
+        required: true,
+      },
     ],
   };
 
@@ -81,11 +171,21 @@ const Signup = () => {
 
   return (
     <div className="flex justify-center mt-7">
-      <Tabs defaultValue="customer" className="w-[800px]" onValueChange={setUserType}>
+      <Tabs
+        defaultValue="customer"
+        className="w-[800px]"
+        onValueChange={setUserType}
+      >
         <TabsList className="flex flex-wrap justify-center w-auto gap-2 mb-4">
-          <TabsTrigger value="customer" className="px-6">Customer</TabsTrigger>
-          <TabsTrigger value="seller" className="px-6">Seller</TabsTrigger>
-          <TabsTrigger value="courier" className="px-6">Courier</TabsTrigger>
+          <TabsTrigger value="customer" className="px-6">
+            Customer
+          </TabsTrigger>
+          <TabsTrigger value="seller" className="px-6">
+            Seller
+          </TabsTrigger>
+          <TabsTrigger value="courier" className="px-6">
+            Courier
+          </TabsTrigger>
         </TabsList>
 
         <div className="w-full">
