@@ -7,6 +7,8 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const { connectDB } = require('./config/DB/connectDB');
+const userRoute = require('./routes/auth.route');
+
 connectDB();
 const corsOptions = {
   origin: ['http://localhost:5173', 'https://mdoc.almahmud.top'], // Add your frontend URLs
@@ -23,6 +25,9 @@ app.use(cors(corsOptions));
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+// API Endpoints
+app.use('/users', userRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
