@@ -15,12 +15,14 @@ const ResponsiveNavbar = () => {
   return (
     <Container>
       <nav className="flex items-center justify-between w-full relative bg-white boxShadow rounded-full px-[10px] py-[8px]">
+        <Link href="/">
         <Image
         width={55}
         height={65}
           src="https://i.ibb.co/0BZfPq6/darklogo.png"
           alt="logo"
         />
+        </Link>
         <ul className="items-center gap-[20px] text-[1rem] text-[#424242] lg:flex hidden">
           <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
             home

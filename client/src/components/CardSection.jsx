@@ -17,43 +17,43 @@ const CardSection = () => {
       image: 'https://example.com/product2.jpg',
     },
     {
-      id: 2,
+      id: 3,
       name: 'Product 2',
       price: 200,
       image: 'https://example.com/product2.jpg',
     },
     {
-      id: 2,
+      id: 4,
       name: 'Product 2',
       price: 200,
       image: 'https://example.com/product2.jpg',
     },
     {
-      id: 2,
+      id: 5,
       name: 'Product 2',
       price: 200,
       image: 'https://example.com/product2.jpg',
     },
     {
-      id: 2,
+      id: 6,
       name: 'Product 2',
       price: 200,
       image: 'https://example.com/product2.jpg',
     },
     {
-      id: 2,
+      id: 7,
       name: 'Product 2',
       price: 200,
       image: 'https://example.com/product2.jpg',
     },
     {
-      id: 2,
+      id: 8,
       name: 'Product 2',
       price: 200,
       image: 'https://example.com/product2.jpg',
     },
     {
-      id: 2,
+      id: 9,
       name: 'Product 2',
       price: 200,
       image: 'https://example.com/product2.jpg',
@@ -66,7 +66,7 @@ const CardSection = () => {
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-4">
             {products.map((product) => (
-              <Card />
+              <Card key={product.id} />
             ))}
           </div>
         </Container>
