@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const customerModel = require('../models/customer.model');
+const sellerModel = require('../models/seller.model');
+const courierModel = require('../models/courier.model');
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 const ACCESS_TOKEN_EXPIRY = process.env.ACCESS_TOKEN_EXPIRY; // 15 minutes
@@ -46,7 +49,7 @@ async function validateRefreshToken(token) {
     const userModel = getModelBasedOnRole(decoded.userType);
     // Check if the token exists in the user's record and hasn't expired
     const user = await userModel.findOne({
-      _id: decoded.id,
+      _id: decoded.userId,
       refreshToken: token,
     });
 

@@ -15,8 +15,8 @@ router.post('/signup/:role', registration);
 // SignIn
 router.post('/login/:role', login);
 // router.post("/signup/:role", registration)
-router.post('/refresh', refreshAccessToken);
-router.post('/get-data', tokenValidationMiddleware, async (req, res) => {
+router.get('/refresh', refreshAccessToken);
+router.get('/get-data', tokenValidationMiddleware, async (req, res) => {
   const { refreshToken } = req.cookies;
   return res.status(200).json({ success: true, refreshToken });
 });

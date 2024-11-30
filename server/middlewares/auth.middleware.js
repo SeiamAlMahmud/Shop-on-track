@@ -34,13 +34,15 @@ const getModelBasedOnRole = (role) => {
 
 const tokenValidationMiddleware = async (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
-
   try {
     // Check if both tokens are present
     if (!refreshToken) {
       return res
         .status(401)
-        .json({ message: 'Unauthorized. Please log in again.' });
+        .json({
+          success: false,
+          message: 'Unauthorized. Please log in again.',
+        });
     }
 
     // Validate the refresh token
@@ -48,8 +50,9 @@ const tokenValidationMiddleware = async (req, res, next) => {
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
-    const userModel = getModelBasedOnRole(decodedRefreshToken.role);
+    const userModel = getModelBasedOnRole(decodedRefreshToken.userType);
     const user = await userModel.findById(decodedRefreshToken.userId);
+    console.log(user, 'user');
 
     if (!user || user.refreshToken !== refreshToken) {
       return res
