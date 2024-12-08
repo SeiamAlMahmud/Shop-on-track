@@ -68,6 +68,8 @@ const tokenValidationMiddleware = async (req, res, next) => {
           process.env.ACCESS_TOKEN_SECRET
         );
         req.user = decodedAccessToken; // Attach user info to the request
+        req.userId = decodedAccessToken.userId;
+        req.role = decodedAccessToken.userType; // Attach user role to the request
         return next();
       } catch (err) {
         // If access token is invalid, fall back to refresh token validation
