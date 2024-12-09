@@ -3,6 +3,9 @@ const Product = require('../models/product.model');
 const sellerModel = require('../models/seller.model');
 
 
+
+
+
 // Add Product by Admin
 const addProductByAdmin = async (req, res) => {
   try {
@@ -127,6 +130,17 @@ const updateProductBySeller = async (req, res) => {
 };
 
 
+const getProduct = async (req, res) => {
+try {
+  
+  const result = await Product.find()
+
+  res.status(200).json({ success: true, message: 'Product fetched successfully', product: result });
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ success: false, message: 'Error adding product', error });
+}
+}
 
 
-module.exports = { addProductByAdmin, updateProductBySeller };
+module.exports = { addProductByAdmin, updateProductBySeller, getProduct };

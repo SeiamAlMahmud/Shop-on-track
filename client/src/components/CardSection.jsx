@@ -88,11 +88,15 @@ const CardSection = () => {
 
   const { api } = useShopContext();
 
-  useLayoutEffect(() => {});
+  useLayoutEffect(() => {
+
+    fetchData()
+  }, []);
 
   const fetchData = async () => {
     try {
-      const result = await api.get('/');
+      const result = await api.get('/product/get-product');
+      console.log(result.data.product)
     } catch (error) {
       console.log(error);
     }
@@ -108,11 +112,10 @@ const CardSection = () => {
           {categories.map((category) => (
             <div
               key={category.id}
-              className={`min-w-[120px] flex flex-col items-center cursor-pointer ${
-                selectedCategory === category.id
+              className={`min-w-[120px] flex flex-col items-center cursor-pointer ${selectedCategory === category.id
                   ? 'text-blue-500'
                   : 'text-gray-700'
-              }`}
+                }`}
               onClick={() => setSelectedCategory(category.id)}
             >
               <img

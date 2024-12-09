@@ -7,7 +7,7 @@ const connectDB = async () => {
       // useUnifiedTopology: true,
       dbName: 'shopDB', // Explicitly set the database name here
     });
-    console.log('DB Connected to customlilly');
+    console.log('DB Connected');
   } catch (error) {
     console.error('Error connecting to the database:', error);
   }
