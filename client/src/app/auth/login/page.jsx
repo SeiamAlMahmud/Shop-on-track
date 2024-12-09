@@ -12,7 +12,7 @@ const page = () => {
   const [userType, setUserType] = useState('customer'); // Default user type
   const [formData, setFormData] = useState({}); // Dynamic form data
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (localStorage.getItem('token') && localStorage.getItem('userType')) {
       setToken(localStorage.getItem('token'));
       const userType = localStorage.getItem('userType');

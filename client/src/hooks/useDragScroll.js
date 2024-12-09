@@ -6,6 +6,8 @@ const useDragScroll = (ref) => {
   const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
+    if (!ref?.current) return; // Ensure ref is valid
+
     const onMouseDown = (e) => {
       setIsMouseDown(true);
       setStartX(e.clientX);
@@ -26,23 +28,27 @@ const useDragScroll = (ref) => {
       setIsMouseDown(false);
     };
 
+    const current = ref.current;
+
     // Attach events for desktop
-    ref.current.addEventListener('mousedown', onMouseDown);
-    ref.current.addEventListener('mousemove', onMouseMove);
-    ref.current.addEventListener('mouseup', onMouseUp);
-    ref.current.addEventListener('mouseleave', onMouseLeave);
+    current.addEventListener('mousedown', onMouseDown);
+    current.addEventListener('mousemove', onMouseMove);
+    current.addEventListener('mouseup', onMouseUp);
+    current.addEventListener('mouseleave', onMouseLeave);
 
     // Clean up events
     return () => {
-      ref.current.removeEventListener('mousedown', onMouseDown);
-      ref.current.removeEventListener('mousemove', onMouseMove);
-      ref.current.removeEventListener('mouseup', onMouseUp);
-      ref.current.removeEventListener('mouseleave', onMouseLeave);
+      current.removeEventListener('mousedown', onMouseDown);
+      current.removeEventListener('mousemove', onMouseMove);
+      current.removeEventListener('mouseup', onMouseUp);
+      current.removeEventListener('mouseleave', onMouseLeave);
     };
   }, [isMouseDown, startX, scrollLeft, ref]);
 
   // For touch devices
   useEffect(() => {
+    if (!ref?.current) return; // Ensure ref is valid
+
     const onTouchStart = (e) => {
       setIsMouseDown(true);
       setStartX(e.touches[0].clientX);
@@ -59,16 +65,18 @@ const useDragScroll = (ref) => {
       setIsMouseDown(false);
     };
 
+    const current = ref.current;
+
     // Attach touch events for mobile devices
-    ref.current.addEventListener('touchstart', onTouchStart);
-    ref.current.addEventListener('touchmove', onTouchMove);
-    ref.current.addEventListener('touchend', onTouchEnd);
+    current.addEventListener('touchstart', onTouchStart);
+    current.addEventListener('touchmove', onTouchMove);
+    current.addEventListener('touchend', onTouchEnd);
 
     // Clean up touch events
     return () => {
-      ref.current.removeEventListener('touchstart', onTouchStart);
-      ref.current.removeEventListener('touchmove', onTouchMove);
-      ref.current.removeEventListener('touchend', onTouchEnd);
+      current.removeEventListener('touchstart', onTouchStart);
+      current.removeEventListener('touchmove', onTouchMove);
+      current.removeEventListener('touchend', onTouchEnd);
     };
   }, [isMouseDown, startX, scrollLeft, ref]);
 };
