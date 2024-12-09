@@ -19,7 +19,7 @@ const page = () => {
       setUserType(userType);
       router.push('/');
     }
-  },[]);
+  }, []);
 
   const formFields = {
     customer: [
