@@ -37,12 +37,10 @@ const tokenValidationMiddleware = async (req, res, next) => {
   try {
     // Check if both tokens are present
     if (!refreshToken) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: 'Unauthorized. Please log in again.',
-        });
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized. Please log in again.',
+      });
     }
 
     // Validate the refresh token
@@ -52,7 +50,7 @@ const tokenValidationMiddleware = async (req, res, next) => {
     );
     const userModel = getModelBasedOnRole(decodedRefreshToken.userType);
     const user = await userModel.findById(decodedRefreshToken.userId);
-    console.log(user, 'user');
+    // console.log(user, 'user');
 
     if (!user || user.refreshToken !== refreshToken) {
       return res
@@ -68,8 +66,8 @@ const tokenValidationMiddleware = async (req, res, next) => {
           process.env.ACCESS_TOKEN_SECRET
         );
         req.user = decodedAccessToken; // Attach user info to the request
-        req.userId = decodedAccessToken.userId;
-        req.role = decodedAccessToken.userType; // Attach user role to the request
+        req.userId = decodedAccessToken.userId || decodedRefreshToken.userId;
+        req.role = decodedAccessToken.userType || decodedRefreshToken.userType; // Attach user role to the request
         return next();
       } catch (err) {
         // If access token is invalid, fall back to refresh token validation
@@ -89,6 +87,8 @@ const tokenValidationMiddleware = async (req, res, next) => {
     });
 
     req.user = { userId: user._id, role: decodedRefreshToken.role }; // Attach user info to the request
+    req.userId = user._id;
+    req.role = decodedRefreshToken.userType; // Attach user role to the request
     next();
   } catch (error) {
     res.status(500).json({

@@ -6,11 +6,15 @@ const productSchema = new mongoose.Schema(
     titleBn: { type: String, required: true },
     description: { type: String, required: true },
     descriptionBn: { type: String, required: true },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    category: { type: String, required: true },
     image: { type: String, required: true },
     sellers: [
       {
-        sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Seller', required: true },
+        sellerId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Seller',
+          required: true,
+        },
         price: { type: Number, required: true },
         address: {
           division: { type: String, required: true },
@@ -23,5 +27,5 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-module.exports = mongoose.model('Product', productSchema);
+const Product = mongoose.model('Product', productSchema);
+module.exports =  Product;

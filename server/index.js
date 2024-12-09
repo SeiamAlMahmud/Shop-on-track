@@ -8,11 +8,12 @@ const app = express();
 const cors = require('cors');
 const { connectDB } = require('./config/DB/connectDB');
 const userRoute = require('./routes/auth.route');
+const productRoute = require('./routes/product.route');
 
 connectDB();
 const corsOptions = {
-  origin: (['http://localhost:3000']), // Add your frontend URLs
-  methods: ['GET', 'POST'], // Specify allowed HTTP methods
+  origin: ['http://localhost:3000'], // Add your frontend URLs
+  methods: ['GET', 'POST', "PUT"], // Specify allowed HTTP methods
   allowedHeaders: ['Authorization', 'Content-Type'], // Allow the Authorization header for Bearer token
   credentials: true, // Allow cookies to be sent
 };
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 // API Endpoints
 app.use('/users', userRoute);
+app.use('/product', productRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

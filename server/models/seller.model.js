@@ -13,7 +13,11 @@ const sellerSchema = new mongoose.Schema(
     refreshToken: { type: String },
     products: [
       {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Product',
+          required: true,
+        },
         price: { type: Number, required: true },
         address: {
           division: { type: String, required: true },
