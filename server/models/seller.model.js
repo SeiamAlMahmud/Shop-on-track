@@ -11,6 +11,23 @@ const sellerSchema = new mongoose.Schema(
     businessLicense: { type: String, required: true },
     bankAccountDetails: { type: String, required: true },
     refreshToken: { type: String },
+    products: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Product',
+          required: true,
+        },
+        price: { type: Number, required: true },
+        isActive: {type: Boolean, default: true },
+        address: {
+          division: { type: String, required: true },
+          district: { type: String, required: true },
+          subDistrict: { type: String, required: true },
+        },
+        addedAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );

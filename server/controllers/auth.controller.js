@@ -51,7 +51,7 @@ const registration = async (req, res) => {
       success: true,
       token: accessToken,
       message: 'User created successfully',
-      userType: role
+      userType: role,
     });
   } catch (error) {
     console.log(error);
@@ -113,7 +113,12 @@ const login = async (req, res) => {
 
     res
       .status(200)
-      .json({ success: true, token: accessToken, message: 'Login successful', userType: role });
+      .json({
+        success: true,
+        token: accessToken,
+        message: 'Login successful',
+        userType: role,
+      });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

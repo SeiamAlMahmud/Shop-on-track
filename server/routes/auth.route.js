@@ -17,8 +17,9 @@ router.post('/login/:role', login);
 // router.post("/signup/:role", registration)
 router.get('/refresh', refreshAccessToken);
 router.get('/get-data', tokenValidationMiddleware, async (req, res) => {
+  const userId = req.userId;
   const { refreshToken } = req.cookies;
-  return res.status(200).json({ success: true, refreshToken });
+  return res.status(200).json({ success: true, refreshToken, userId });
 });
 
 module.exports = router;

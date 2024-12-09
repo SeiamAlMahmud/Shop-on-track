@@ -50,7 +50,7 @@ const HeroSection = () => {
           </div>
         </header>
 
-        <section className="p-8 mt-2 grid sm:grid-cols-2 grid-cols-1 lg:grid-cols-4 gap-[25px] flex-wrap">
+        {/* <section className="p-8 mt-2 grid sm:grid-cols-2 grid-cols-1 lg:grid-cols-4 gap-[25px] flex-wrap">
           <div>
             <img
               src="https://i.ibb.co/XCM2bhM/Baby-food.png"
@@ -110,7 +110,7 @@ const HeroSection = () => {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
           </div>
-        </section>
+        </section> */}
       </div>
     </Container>
   );
