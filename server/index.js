@@ -13,7 +13,7 @@ const productRoute = require('./routes/product.route');
 connectDB();
 const corsOptions = {
   origin: ['http://localhost:3000'], // Add your frontend URLs
-  methods: ['GET', 'POST', "PUT"], // Specify allowed HTTP methods
+  methods: ['GET', 'POST', 'PUT'], // Specify allowed HTTP methods
   allowedHeaders: ['Authorization', 'Content-Type'], // Allow the Authorization header for Bearer token
   credentials: true, // Allow cookies to be sent
 };
