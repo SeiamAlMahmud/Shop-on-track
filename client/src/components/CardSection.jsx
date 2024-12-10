@@ -1,26 +1,38 @@
-"use client";
+'use client';
 
-import React, { useState, useRef, useLayoutEffect } from "react";
-import useDragScroll from "../hooks/useDragScroll"; // Import the custom hook
-import Container from "./Container";
-import { useShopContext } from "@/context/ShopContext";
+import React, { useState, useRef, useLayoutEffect } from 'react';
+import useDragScroll from '../hooks/useDragScroll'; // Import the custom hook
+import Container from './Container';
+import { useShopContext } from '@/context/ShopContext';
 
 const categories = [
-  { id: 1, name: "Honey", icon: "https://i.ibb.co/XCM2bhM/Baby-food.png" },
-  { id: 2, name: "Spices & Herbs", icon: "https://i.ibb.co/J5Yd3cZ/Condiments.png" },
-  { id: 3, name: "Dairy & Eggs", icon: "https://i.ibb.co/h2R9kny/Dairy.png" },
-  { id: 4, name: "Grains & Pulses", icon: "https://i.ibb.co/HYHZfHQ/Grain-and-pasta.png" },
-  { id: 5, name: "Fruits", icon: "https://i.ibb.co/y5ZTLHv/Fruits-and-vegetables.png" },
+  { id: 1, name: 'Honey', icon: 'https://i.ibb.co/XCM2bhM/Baby-food.png' },
+  {
+    id: 2,
+    name: 'Spices & Herbs',
+    icon: 'https://i.ibb.co/J5Yd3cZ/Condiments.png',
+  },
+  { id: 3, name: 'Dairy & Eggs', icon: 'https://i.ibb.co/h2R9kny/Dairy.png' },
+  {
+    id: 4,
+    name: 'Grains & Pulses',
+    icon: 'https://i.ibb.co/HYHZfHQ/Grain-and-pasta.png',
+  },
+  {
+    id: 5,
+    name: 'Fruits',
+    icon: 'https://i.ibb.co/y5ZTLHv/Fruits-and-vegetables.png',
+  },
   {
     id: 6,
-    name: "Vegetable",
-    icon: "https://res.cloudinary.com/dmrdnqrqe/image/upload/v1733727523/vegetable_oxjhid.png",
+    name: 'Vegetable',
+    icon: 'https://res.cloudinary.com/dmrdnqrqe/image/upload/v1733727523/vegetable_oxjhid.png',
     size: 55,
   },
   {
     id: 7,
-    name: "Meat",
-    icon: "https://res.cloudinary.com/dmrdnqrqe/image/upload/v1733728599/proteins_j9nkot.png",
+    name: 'Meat',
+    icon: 'https://res.cloudinary.com/dmrdnqrqe/image/upload/v1733728599/proteins_j9nkot.png',
     size: 55,
   },
 ];
@@ -46,7 +58,7 @@ const CardSection = () => {
 
   const fetchData = async () => {
     try {
-      const result = await api.get("/product/get-product");
+      const result = await api.get('/product/get-product');
       setProducts(result.data.product);
     } catch (error) {
       console.error(error);
@@ -66,15 +78,15 @@ const CardSection = () => {
               key={item.id}
               className={`min-w-[120px] flex flex-col items-center cursor-pointer ${
                 selectedCategory === item.name
-                  ? "text-blue-500"
-                  : "text-gray-700"
+                  ? 'text-blue-500'
+                  : 'text-gray-700'
               }`}
               onClick={() => setSelectedCategory(item.name)}
             >
               <img
                 src={item.icon}
                 alt={item.name}
-                className={item.size ? "w-[50px] mb-2 mx-0" : `w-[60px] mx-5`}
+                className={item.size ? 'w-[50px] mb-2 mx-0' : `w-[60px] mx-5`}
               />
               <h4 className="text-[16px] font-medium mt-2">{item.name}</h4>
             </div>

@@ -10,7 +10,7 @@ const HeroSection = () => {
     <Container>
       <div className="w-full h-full bg-[#FBFBFB] rounded-md">
         {/* header */}
-        <header className="flex lg:flex-row flex-col gap-[50px] lg:gap-10 items-center p-8">
+        <header className="flex lg:flex-row flex-col-reverse gap-[50px] lg:gap-10 items-center p-8">
           <div className="w-full lg:w-[55%]">
             <h1 className="text-[40px] sm:text-[60px] font-[600] leading-[45px] sm:leading-[70px]">
               Let your <span className="text-[#F38160]">groceries</span> come to
