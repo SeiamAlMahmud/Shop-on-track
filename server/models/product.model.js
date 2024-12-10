@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema(
           ref: 'Seller',
           required: true,
         },
-        isActive: {type: Boolean, default: true },
+        isActive: { type: Boolean, default: true },
         price: { type: Number, required: true },
         address: {
           division: { type: String, required: true },
@@ -29,4 +29,4 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 const Product = mongoose.model('Product', productSchema);
-module.exports =  Product;
+module.exports = Product;

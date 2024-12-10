@@ -2,10 +2,6 @@ const fs = require('fs');
 const Product = require('../models/product.model');
 const sellerModel = require('../models/seller.model');
 
-
-
-
-
 // Add Product by Admin
 const addProductByAdmin = async (req, res) => {
   try {
@@ -42,21 +38,22 @@ const addProductByAdmin = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Error adding product', error });
+    res
+      .status(500)
+      .json({ success: false, message: 'Error adding product', error });
   }
 };
-
 
 const updateProductBySeller = async (req, res) => {
   try {
     const { productId, price, division, district, subDistrict } = req.body;
     const sellerId = req.userId; // Extract seller ID from the authenticated user
     const userType = req.role; // Extract user role
-    console.log(sellerId,userType, req.body, "req.body")
-    if (userType !== "seller") {
+    console.log(sellerId, userType, req.body, 'req.body');
+    if (userType !== 'seller') {
       return res.status(401).json({
         success: false,
-        message: "Unauthorized: Only sellers can update products",
+        message: 'Unauthorized: Only sellers can update products',
       });
     }
 
@@ -64,7 +61,8 @@ const updateProductBySeller = async (req, res) => {
     if (!productId || !price || !division || !district || !subDistrict) {
       return res.status(400).json({
         success: false,
-        message: "All fields (productId, price, division, district, subDistrict) are required",
+        message:
+          'All fields (productId, price, division, district, subDistrict) are required',
       });
     }
 
@@ -86,7 +84,7 @@ const updateProductBySeller = async (req, res) => {
     if (!productUpdate) {
       return res.status(404).json({
         success: false,
-        message: "Product not found",
+        message: 'Product not found',
       });
     }
 
@@ -108,14 +106,14 @@ const updateProductBySeller = async (req, res) => {
     if (!sellerUpdate) {
       return res.status(404).json({
         success: false,
-        message: "Seller not found",
+        message: 'Seller not found',
       });
     }
 
     // Respond with success
     res.status(200).json({
       success: true,
-      message: "Product updated successfully",
+      message: 'Product updated successfully',
       product: productUpdate,
       seller: sellerUpdate,
     });
@@ -123,24 +121,29 @@ const updateProductBySeller = async (req, res) => {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Error updating product",
+      message: 'Error updating product',
       error: error.message,
     });
   }
 };
 
-
 const getProduct = async (req, res) => {
-try {
-  
-  const result = await Product.find()
+  try {
+    const result = await Product.find();
 
-  res.status(200).json({ success: true, message: 'Product fetched successfully', product: result });
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ success: false, message: 'Error adding product', error });
-}
-}
-
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Product fetched successfully',
+        product: result,
+      });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Error adding product', error });
+  }
+};
 
 module.exports = { addProductByAdmin, updateProductBySeller, getProduct };
