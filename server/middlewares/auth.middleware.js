@@ -86,7 +86,7 @@ const tokenValidationMiddleware = async (req, res, next) => {
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
-    req.user = { userId: user._id, role: decodedRefreshToken.role }; // Attach user info to the request
+    req.user = { userId: user._id, role: decodedRefreshToken.role, fullName: decodedRefreshToken.fullName || ""}; // Attach user info to the request
     req.userId = user._id;
     req.role = decodedRefreshToken.userType; // Attach user role to the request
     next();

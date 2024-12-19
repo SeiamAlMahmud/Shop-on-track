@@ -51,6 +51,7 @@ const updateProductBySeller = async (req, res) => {
   try {
     const { productId, price, division, district, subDistrict } = req.body;
     const sellerId = req.userId; // Extract seller ID from the authenticated user
+    const user = req.user; // Extract seller ID from the authenticated user
     const userType = req.role; // Extract user role
     console.log(sellerId,userType, req.body, "req.body")
     if (userType !== "seller") {
@@ -76,6 +77,7 @@ const updateProductBySeller = async (req, res) => {
           sellers: {
             sellerId,
             price,
+            fullName: user.fullName,
             address: { division, district, subDistrict },
           },
         },
@@ -131,16 +133,42 @@ const updateProductBySeller = async (req, res) => {
 
 
 const getProduct = async (req, res) => {
-try {
-  
-  const result = await Product.find()
+  try {
+    // Fetch products where at least one seller has 'isActive' set to true
+    const result = await Product.find({ 'sellers.isActive': true });
 
-  res.status(200).json({ success: true, message: 'Product fetched successfully', product: result });
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ success: false, message: 'Error adding product', error });
-}
-}
+    if (!result || result.length === 0) {
+      return res.status(400).json({ success: false, message: 'No active products found.' });
+    }
+
+    res.status(200).json({ success: true, message: 'Product fetched successfully', product: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error fetching products', error });
+  }
+};
 
 
-module.exports = { addProductByAdmin, updateProductBySeller, getProduct };
+
+const getSingleProduct = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    if (!productId) {
+      return res.status(400).json({ success: false, message: 'Product ID is required' });
+    }
+    
+    // Fetch the product and ensure it's active
+    const product = await Product.findOne({ _id: productId, 'sellers.isActive': true });
+
+    if (!product) {
+      return res.status(400).json({ success: false, message: 'Product not found or is inactive.' });
+    }
+
+    res.status(200).json({ success: true, message: 'Product fetched successfully', product });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error finding specific product', error });
+  }
+};
+
+
+module.exports = { addProductByAdmin, updateProductBySeller, getProduct , getSingleProduct};

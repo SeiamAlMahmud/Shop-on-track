@@ -12,7 +12,7 @@ export const ShopProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   const api = axios.create({
-    baseURL: 'http://localhost:5000', // Replace with your backend base URL
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Replace with your backend base URL
     withCredentials: true, // Enables sending cookies with requests
     headers: {
       'Content-Type': 'application/json', // Default header

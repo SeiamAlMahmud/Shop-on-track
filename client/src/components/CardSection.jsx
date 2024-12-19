@@ -4,6 +4,7 @@ import React, { useState, useRef, useLayoutEffect } from "react";
 import useDragScroll from "../hooks/useDragScroll"; // Import the custom hook
 import Container from "./Container";
 import { useShopContext } from "@/context/ShopContext";
+import Link from "next/link";
 
 const categories = [
   { id: 1, name: "Honey", icon: "https://i.ibb.co/XCM2bhM/Baby-food.png" },
@@ -89,14 +90,16 @@ const CardSection = () => {
                 key={product._id}
                 className="border p-2 rounded-lg shadow hover:shadow-md transition"
               >
-                <img
+              <Link href={`/products/${product._id}`}>
+               <img
                   src={`http://localhost:5000/${product.image}`}
                   alt={product.name}
                   className="w-full h-40 object-cover rounded"
                 />
                 <h4 className="mt-2 text-lg font-medium">{product.title}</h4>
+                </Link>
                 <p className="text-gray-600 mt-3">
-                  Description: {product.description}
+                {product.description}
                 </p>
               </div>
             ))
