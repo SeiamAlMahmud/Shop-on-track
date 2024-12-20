@@ -115,7 +115,7 @@ const Page = () => {
                                                             sellerName: seller.fullName,
                                                             price: seller.price,
                                                             weight: seller.weight,
-                                                            itemData,
+                                                            product: itemData.product,
                                                             location: {
                                                                 subDistrict: seller.address.subDistrict,
                                                                 district: seller.address.district,

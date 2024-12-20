@@ -2,6 +2,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { ShopProvider } from '@/context/ShopContext';
 import ResponsiveNavbar from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
         <ShopProvider>
           <ResponsiveNavbar />
           {children}
+          <Footer />
         </ShopProvider>
       </body>
     </html>
