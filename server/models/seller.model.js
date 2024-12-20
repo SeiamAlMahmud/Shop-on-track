@@ -19,6 +19,7 @@ const sellerSchema = new mongoose.Schema(
           required: true,
         },
         price: { type: Number, required: true },
+        weight: { type: Number, required: true },
         isActive: {type: Boolean, default: true },
         address: {
           division: { type: String, required: true },

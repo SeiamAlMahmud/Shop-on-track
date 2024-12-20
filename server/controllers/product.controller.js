@@ -49,11 +49,11 @@ const addProductByAdmin = async (req, res) => {
 
 const updateProductBySeller = async (req, res) => {
   try {
-    const { productId, price, division, district, subDistrict } = req.body;
+    const { productId, price, weight, division, district, subDistrict } = req.body;
     const sellerId = req.userId; // Extract seller ID from the authenticated user
     const user = req.user; // Extract seller ID from the authenticated user
     const userType = req.role; // Extract user role
-    console.log(sellerId,userType, req.body, "req.body")
+    console.log(sellerId, userType, req.body, "req.body")
     if (userType !== "seller") {
       return res.status(401).json({
         success: false,
@@ -62,7 +62,7 @@ const updateProductBySeller = async (req, res) => {
     }
 
     // Validate required fields
-    if (!productId || !price || !division || !district || !subDistrict) {
+    if (!productId || !price || !weight || !division || !district || !subDistrict) {
       return res.status(400).json({
         success: false,
         message: "All fields (productId, price, division, district, subDistrict) are required",
@@ -78,6 +78,7 @@ const updateProductBySeller = async (req, res) => {
             sellerId,
             price,
             fullName: user.fullName,
+            weight,
             address: { division, district, subDistrict },
           },
         },
@@ -99,6 +100,7 @@ const updateProductBySeller = async (req, res) => {
         $push: {
           products: {
             productId,
+            weight,
             price,
             address: { division, district, subDistrict },
           },
@@ -156,7 +158,7 @@ const getSingleProduct = async (req, res) => {
     if (!productId) {
       return res.status(400).json({ success: false, message: 'Product ID is required' });
     }
-    
+
     // Fetch the product and ensure it's active
     const product = await Product.findOne({ _id: productId, 'sellers.isActive': true });
 
@@ -171,4 +173,4 @@ const getSingleProduct = async (req, res) => {
 };
 
 
-module.exports = { addProductByAdmin, updateProductBySeller, getProduct , getSingleProduct};
+module.exports = { addProductByAdmin, updateProductBySeller, getProduct, getSingleProduct };
