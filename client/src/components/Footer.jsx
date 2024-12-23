@@ -33,11 +33,11 @@ const Footer = () => {
                             <a href='javascript:void(0)'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" viewBox="0 0 152 152">
                                     <linearGradient id="a" x1="22.26" x2="129.74" y1="22.26" y2="129.74" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0" stop-color="#fae100" />
-                                        <stop offset=".15" stop-color="#fcb720" />
-                                        <stop offset=".3" stop-color="#ff7950" />
-                                        <stop offset=".5" stop-color="#ff1c74" />
-                                        <stop offset="1" stop-color="#6c1cd1" />
+                                        <stop offset="0" stopColor="#fae100" />
+                                        <stop offset=".15" stopColor="#fcb720" />
+                                        <stop offset=".3" stopColor="#ff7950" />
+                                        <stop offset=".5" stopColor="#ff1c74" />
+                                        <stop offset="1" stopColor="#6c1cd1" />
                                     </linearGradient>
                                     <g data-name="Layer 2">
                                         <g data-name="03.Instagram">

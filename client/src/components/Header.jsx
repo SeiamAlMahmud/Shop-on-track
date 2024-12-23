@@ -7,9 +7,13 @@ import { CiMenuFries } from 'react-icons/ci';
 import Container from './Container';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useShopContext } from '@/context/ShopContext';
+import Badge from './Badge';
 
 const ResponsiveNavbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  const {token} = useShopContext();
 
   return (
     <Container>
@@ -38,11 +42,11 @@ const ResponsiveNavbar = () => {
         </ul>
 
         <div className="items-center gap-[10px] flex">
-          <Link href={'/auth/login'}>
+          {token ? <Badge /> :<Link href={'/auth/login'}>
             <button className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#3B9DF8] text-white hover:bg-blue-400 transition-all duration-300 sm:flex ">
               Sign In
             </button>
-          </Link>
+          </Link>}
 
           <CiMenuFries
             className="text-[1.8rem] mr-1 text-[#424242]c cursor-pointer lg:hidden flex"

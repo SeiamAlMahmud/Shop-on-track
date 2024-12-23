@@ -1,6 +1,6 @@
 'use client';
 import axios from 'axios';
-import { createContext, useContext, useState } from 'react';
+import { createContext, use, useContext, useEffect, useState } from 'react';
 
 // Create a Context
 const ShopContext = createContext();
@@ -18,6 +18,19 @@ export const ShopProvider = ({ children }) => {
       'Content-Type': 'application/json', // Default header
     },
   });
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      setToken(token);
+    }
+
+    const usrType = localStorage.getItem('userType');
+    if (usrType) {
+      setType(usrType);
+    }
+  }, [token, Type]);
 
   // You can add more logic to manage your auth state (login, logout, etc.)
   const contain = {
