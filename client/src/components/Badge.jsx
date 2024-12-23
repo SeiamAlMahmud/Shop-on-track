@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { User, ShoppingCart, LogOut } from "lucide-react";
+import Link from "next/link";
 
 const Badge = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -40,13 +41,14 @@ const Badge = () => {
             {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-md z-50">
                     <ul className="py-2">
-                        <li
+                       <Link href={"/myprofile"}> <li
                             className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onClick={() => setIsDropdownOpen(false)}
                         >
                             <User className="mr-2 text-gray-600" size={18} />
                             Profile
                         </li>
+                        </Link>
                         <li
                             className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onClick={() => setIsDropdownOpen(false)}
