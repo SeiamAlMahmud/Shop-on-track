@@ -100,7 +100,7 @@ const Page = () => {
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">{seller.price}</TableCell>
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">{seller.weight}</TableCell>
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">
-                                                {seller.address.subDistrict} , {seller.address.district}, {seller.address.division}
+                                                {seller.address.subDistrict} , <br /> {seller.address.district}, <br /> {seller.address.division}
                                             </TableCell>
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">
                                                 {new Date(seller.addedAt).toLocaleDateString()}

@@ -1,10 +1,7 @@
 const fs = require('fs');
 const Product = require('../models/product.model');
+const Courier = require('../models/courier.model');
 const sellerModel = require('../models/seller.model');
-
-
-
-
 
 // Add Product by Admin
 const addProductByAdmin = async (req, res) => {
@@ -166,7 +163,17 @@ const getSingleProduct = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Product not found or is inactive.' });
     }
 
-    res.status(200).json({ success: true, message: 'Product fetched successfully', product });
+    const { division, district, subDistrict } = product.sellers[0].address;
+
+    const couriers = await Courier.find({
+      division,
+      district,
+      subDistrict,
+      status: 'active',
+      bookingAvailability: true,
+    }).select('-password');
+
+    res.status(200).json({ success: true, message: 'Product fetched successfully', product, couriers });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error finding specific product', error });
   }
