@@ -21,6 +21,7 @@ const Page = () => {
                 try {
                     const result = await api.get(`/product/get-single-product/${item}`);
                     setItemData(result.data);
+                    console.log(result.data)
                 } catch (err) {
                     console.error(err);
                     setError("Failed to fetch item data.");
@@ -112,17 +113,17 @@ const Page = () => {
                                                     size="small"
                                                     onClick={() => {
                                                         const sellerData = {
+                                                            productId: itemData.product._id,
+                                                            sellerId: seller._id,
                                                             sellerName: seller.fullName,
                                                             price: seller.price,
                                                             weight: seller.weight,
-                                                            product: itemData.product,
                                                             location: {
                                                                 subDistrict: seller.address.subDistrict,
                                                                 district: seller.address.district,
                                                                 division: seller.address.division,
                                                             },
                                                             addedAt: seller.addedAt,
-                                                            courier: itemData.couriers,
                                                         };
                                                         const encryptedSellerData = encryptData(sellerData); // Encrypt the seller data
                                                         router.push(`/products/details/${seller._id}?data=${encodeURIComponent(encryptedSellerData)}`);

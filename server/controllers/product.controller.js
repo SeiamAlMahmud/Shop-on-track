@@ -163,21 +163,13 @@ const getSingleProduct = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Product not found or is inactive.' });
     }
 
-    const { division, district, subDistrict } = product.sellers[0].address;
-
-    const couriers = await Courier.find({
-      division,
-      district,
-      subDistrict,
-      status: 'active',
-      bookingAvailability: true,
-    }).select('-password -email -driverLicense -businessLicense -bankAccountDetails -refreshToken  -vehicleRegistrationNumber');
-
-    res.status(200).json({ success: true, message: 'Product fetched successfully', product, couriers });
+    res.status(200).json({ success: true, message: 'Product fetched successfully', product});
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error finding specific product', error });
   }
 };
+
+
 
 
 module.exports = { addProductByAdmin, updateProductBySeller, getProduct, getSingleProduct };
