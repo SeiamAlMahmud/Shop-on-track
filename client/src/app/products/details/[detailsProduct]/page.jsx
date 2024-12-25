@@ -13,7 +13,7 @@ const SellerDetails = () => {
         if (encryptedData) {
             try {
                 const decryptedData = decryptData(decodeURIComponent(encryptedData)); // Decrypt the data
-                console.log(decryptedData)
+                console.log(decryptedData, "decryptedData")
                 setSellerData(decryptedData);
             } catch (err) {
                 console.error("Error decrypting data:", err);

@@ -15,6 +15,11 @@ const customerSchema = new mongoose.Schema(
     },
     dateOfBirth: { type: Date },
     refreshToken: { type: String },
+    orderHistory: [
+      {
+        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+      }
+    ],
   },
   { timestamps: true }
 );

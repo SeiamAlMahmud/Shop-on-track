@@ -171,7 +171,7 @@ const getSingleProduct = async (req, res) => {
       subDistrict,
       status: 'active',
       bookingAvailability: true,
-    }).select('-password');
+    }).select('-password -email -driverLicense -businessLicense -bankAccountDetails -refreshToken  -vehicleRegistrationNumber');
 
     res.status(200).json({ success: true, message: 'Product fetched successfully', product, couriers });
   } catch (error) {

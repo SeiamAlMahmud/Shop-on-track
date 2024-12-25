@@ -32,6 +32,11 @@ const courierSchema = new mongoose.Schema(
       }
     ],
     status: { type: String, enum: ['active', 'inactive'], default: 'active' },
+    orderHistory: [
+      {
+        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+      }
+    ],
   },
   { timestamps: true }
 );

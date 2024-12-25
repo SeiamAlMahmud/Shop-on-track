@@ -122,12 +122,13 @@ const Page = () => {
                                                                 division: seller.address.division,
                                                             },
                                                             addedAt: seller.addedAt,
+                                                            courier: itemData.couriers,
                                                         };
                                                         const encryptedSellerData = encryptData(sellerData); // Encrypt the seller data
                                                         router.push(`/products/details/${seller._id}?data=${encodeURIComponent(encryptedSellerData)}`);
                                                     }}
                                                 >
-                                                    Order
+                                                    Details
                                                 </Button>
                                             </TableCell>
 
