@@ -3,23 +3,43 @@
 import { decryptData } from "@/utils/crypto";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useShopContext } from "@/context/ShopContext";
 
 const SellerDetails = () => {
     const searchParams = useSearchParams();
+    const {api} = useShopContext();
+    const userType = localStorage.getItem("userType");
     const [sellerData, setSellerData] = useState(null);
+    const router = useRouter();
 
     useEffect(() => {
         const encryptedData = searchParams.get("data"); // Get encrypted data from query
-        if (encryptedData) {
-            try {
-                const decryptedData = decryptData(decodeURIComponent(encryptedData)); // Decrypt the data
-                console.log(decryptedData, "decryptedData")
-                setSellerData(decryptedData);
-            } catch (err) {
-                console.error("Error decrypting data:", err);
-            }
+        if (!encryptedData) return router("/");
+        try {
+            const decryptedData = decryptData(decodeURIComponent(encryptedData)); // Decrypt the data
+            console.log(decryptedData, "decryptedData")
+            setSellerData(decryptedData);
+            if (!decryptedData) return router("/");
+
+            getAvailAbleCourier(decryptedData);
+
+        } catch (err) {
+            console.error("Error decrypting data:", err);
         }
     }, [searchParams]);
+
+    const getAvailAbleCourier = async (decryptedData) => {
+        try {
+            if (decryptedData.sellerId) {
+                
+                const result = await api.post(`/product/getCouriersOnBaseSeller/${decryptedData.sellerId}`, {decryptedData});
+                console.log(result.data.couriers, "result")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     if (!sellerData) {
         return <p>Loading seller details...</p>;

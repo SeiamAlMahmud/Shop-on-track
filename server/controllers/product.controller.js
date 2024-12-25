@@ -1,7 +1,7 @@
 const fs = require('fs');
 const Product = require('../models/product.model');
 const Courier = require('../models/courier.model');
-const sellerModel = require('../models/seller.model');
+const Seller = require('../models/seller.model');
 
 // Add Product by Admin
 const addProductByAdmin = async (req, res) => {
@@ -91,7 +91,7 @@ const updateProductBySeller = async (req, res) => {
     }
 
     // Update the Seller schema
-    const sellerUpdate = await sellerModel.findByIdAndUpdate(
+    const sellerUpdate = await Seller.findByIdAndUpdate(
       sellerId,
       {
         $push: {
@@ -163,13 +163,44 @@ const getSingleProduct = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Product not found or is inactive.' });
     }
 
-    res.status(200).json({ success: true, message: 'Product fetched successfully', product});
+    res.status(200).json({ success: true, message: 'Product fetched successfully', product });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error finding specific product', error });
   }
 };
 
+const getCouriersOnBaseSeller = async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const { decryptedData } = req.body;
+    console.log(decryptedData, "decryptedData");
+
+    if (!sellerId) {
+      return res.status(400).json({ success: false, message: 'Seller ID is required' });
+    }
+
+    // Fetch the seller and ensure they exist
+    const seller = await Seller.findById(decryptedData.sellerId);
+    if (!seller) {
+      return res.status(400).json({ success: false, message: 'Seller not found or is inactive.' });
+    }
+    // console.log(seller, "seller");
+
+    const { division, district, subDistrict } = decryptedData.location;
+
+    const couriers = await Courier.find({
+      division,
+      district,
+      subDistrict,
+      status: 'active',
+      bookingAvailability: true,
+    }).select('-password -email -driverLicense -businessLicense -bankAccountDetails -refreshToken -vehicleRegistrationNumber');
+
+    res.status(200).json({ success: true, message: 'Couriers fetched successfully', couriers });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error finding couriers', error });
+  }
+};
 
 
-
-module.exports = { addProductByAdmin, updateProductBySeller, getProduct, getSingleProduct };
+module.exports = { addProductByAdmin, updateProductBySeller, getProduct, getSingleProduct, getCouriersOnBaseSeller };
