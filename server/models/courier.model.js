@@ -18,7 +18,7 @@ const courierSchema = new mongoose.Schema(
     refreshToken: { type: String },
     bookingAvailability: { type: Boolean, default: true },
     bookingDates: [{ type: Date }],
-    vehicleStatus: { type: String, enum: ['available', 'busy'], default: 'available' },
+    vehicleStatus: { type: String, enum: ['available', 'busy', 'maintenance'], default: 'available' },
     division: { type: String, default: "" },
     district: { type: String, default: "" },
     subDistrict: { type: String, default: "" },

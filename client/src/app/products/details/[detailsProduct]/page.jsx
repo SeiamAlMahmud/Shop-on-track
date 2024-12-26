@@ -1,16 +1,18 @@
 "use client";
 
-import { decryptData } from "@/utils/crypto";
+import { decryptData, encryptData } from "@/utils/crypto";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useShopContext } from "@/context/ShopContext";
 
 const SellerDetails = () => {
     const searchParams = useSearchParams();
-    const {api} = useShopContext();
+    const { api } = useShopContext();
     const userType = localStorage.getItem("userType");
     const [sellerData, setSellerData] = useState(null);
+    const [couriersList, setCourierList] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -32,9 +34,10 @@ const SellerDetails = () => {
     const getAvailAbleCourier = async (decryptedData) => {
         try {
             if (decryptedData.sellerId) {
-                
-                const result = await api.post(`/product/getCouriersOnBaseSeller/${decryptedData.sellerId}`, {decryptedData});
+
+                const result = await api.post(`/product/getCouriersOnBaseSeller/${decryptedData.sellerId}`, { decryptedData });
                 console.log(result.data.couriers, "result")
+                setCourierList(result.data.couriers)
             }
         } catch (error) {
             console.log(error)
@@ -47,12 +50,94 @@ const SellerDetails = () => {
 
     return (
         <div className="p-4">
-            <h1 className="text-xl font-bold">Seller Details</h1>
-            <p><strong>Name:</strong> {sellerData.sellerName}</p>
-            <p><strong>Price:</strong> {sellerData.price}</p>
-            <p><strong>Weight:</strong> {sellerData.weight} kg</p>
-            <p><strong>Location:</strong> {sellerData.location.subDistrict}, {sellerData.location.district}, {sellerData.location.division}</p>
-            <p><strong>Added At:</strong> {new Date(sellerData.addedAt).toLocaleDateString()}</p>
+            <div>
+                <h1 className="text-xl font-bold">Seller Details</h1>
+                <div><p><strong>Name:</strong> {sellerData.sellerName}</p>
+                    <p><strong>Price:</strong> {sellerData.price}</p>
+                    <p><strong>Weight:</strong> {sellerData.weight} kg</p>
+                    <p><strong>Location:</strong> {sellerData.location.subDistrict}, {sellerData.location.district}, {sellerData.location.division}</p>
+                    <p><strong>Added At:</strong> {new Date(sellerData.addedAt).toLocaleDateString()}</p></div>
+                <div>
+                    <img
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${sellerData.image}`} alt="" />
+                </div>
+            </div>
+            <div className="mt-6">
+                <h2 className="grid place-items-center text-sm sm:text-xl md:text-3xl font-extrabold my-7">Available Sellers for This Item</h2>
+                {couriersList.length > 0 ? (
+                    <TableContainer component={Paper} className="shadow-black">
+                        <Table style={{ tableLayout: "auto" }}>
+                            <TableHead>
+                                <TableRow className="bg-gray-300">
+                                    <TableCell className="text-xs sm:text-sm p-1 sm:p-2">business Name</TableCell>
+                                    <TableCell className="text-xs sm:text-sm p-1 sm:p-2">vehicleType</TableCell>
+                                    <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Capacity(Kg)</TableCell>
+                                    <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Location</TableCell>
+                                    <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Status</TableCell>
+                                    <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Order</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {couriersList.map((courier, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">{courier.businessName}</TableCell>
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">{courier.vehicleType}</TableCell>
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">{courier.deliveryCapacity}</TableCell>
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">
+                                            {courier.subDistrict} , <br /> {courier.district}, <br /> {courier.division}
+                                        </TableCell>
+                                        <TableCell
+                                            sx={{
+                                                color:
+                                                    courier.vehicleStatus === "available"
+                                                        ? "green"
+                                                        : courier.vehicleStatus === "busy"
+                                                            ? "red"
+                                                            : courier.vehicleStatus === "maintenance"
+                                                                ? "yellow"
+                                                                : "inherit",
+                                            }}
+                                        >
+                                            {courier.vehicleStatus}
+                                        </TableCell>
+
+
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                size="small"
+                                                onClick={() => {
+                                                    const sellerData = {
+                                                        // productId: itemData.product._id,
+                                                        // sellerId: seller.sellerId,
+                                                        // sellerName: seller.fullName,
+                                                        // price: seller.price,
+                                                        // weight: seller.weight,
+                                                        // location: {
+                                                        //     subDistrict: seller.address.subDistrict,
+                                                        //     district: seller.address.district,
+                                                        //     division: seller.address.division,
+                                                        // },
+                                                        // addedAt: seller.addedAt,
+                                                    };
+                                                    const encryptedSellerData = encryptData(sellerData); // Encrypt the seller data
+                                                    router.push(`/products/details/${seller._id}?data=${encodeURIComponent(encryptedSellerData)}`);
+                                                }}
+                                            >
+                                                {courier.vehicleStatus == "busy" ? "Booking" : "Order"}
+                                            </Button>
+                                        </TableCell>
+
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                ) : (
+                    <p>No sellers available</p>
+                )}
+            </div>
         </div>
     );
 };
