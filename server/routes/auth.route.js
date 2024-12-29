@@ -5,6 +5,7 @@ const {
   registration,
   refreshAccessToken,
   login,
+  logout,
 } = require('../controllers/auth.controller');
 const tokenValidationMiddleware = require('../middlewares/auth.middleware');
 
@@ -14,6 +15,8 @@ const router = express.Router();
 router.post('/signup/:role', registration);
 // SignIn
 router.post('/login/:role', login);
+// Sign Out
+router.post('/logout', logout);
 // router.post("/signup/:role", registration)
 router.get('/refresh', refreshAccessToken);
 router.get('/get-data', tokenValidationMiddleware, async (req, res) => {
