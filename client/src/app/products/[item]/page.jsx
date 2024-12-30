@@ -80,7 +80,7 @@ const Page = () => {
                 </div>
 
                 <div className="mt-6">
-                    <h2 className="grid place-items-center text-sm sm:text-xl md:text-3xl font-extrabold my-7">Available Sellers for This Item</h2>
+                    <h2 className=" text-sm sm:text-xl md:text-3xl font-extrabold my-7  flex justify-center gap-2 items-center">Available<span className="text-green-500 font-bold"> Sellers </span>  for This Item</h2>
                     {itemData.product.sellers.length > 0 ? (
                         <TableContainer component={Paper} className="shadow-black">
                             <Table style={{ tableLayout: "auto" }}>
