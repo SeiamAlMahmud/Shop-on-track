@@ -21,7 +21,7 @@ const Page = () => {
                 try {
                     const result = await api.get(`/product/get-single-product/${item}`);
                     setItemData(result.data);
-                    console.log(result.data, "item")
+                    // console.log(result.data, "item")
                 } catch (err) {
                     console.error(err);
                     setError("Failed to fetch item data.");

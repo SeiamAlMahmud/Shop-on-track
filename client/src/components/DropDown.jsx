@@ -45,7 +45,7 @@ const DropDown = ({ courier, sellerData }) => {
         setLoading(true);
         
         try {
-            const response = await api.post("/order/new", orderDetails);
+            const response = await api.post("/product/new-order", orderDetails, { withCredentials: true });
             console.log(response.data);
             toast.success("Order Create Successfully.")
         } catch (error) {

@@ -24,6 +24,7 @@ const customerOnlyMiddleware = (req, res, next) => {
     req.role = decodedToken.userType; // Attach user role to the request
     next();
   } catch (error) {
+    console.log(error)
     return res.status(403).json({
       success: false,
       message: 'Invalid token. Please log in again.',

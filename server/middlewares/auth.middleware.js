@@ -34,6 +34,7 @@ const getModelBasedOnRole = (role) => {
 
 const tokenValidationMiddleware = async (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
+  console.log(accessToken, "accessToken", refreshToken, "refreshToken");
   try {
     // Check if both tokens are present
     if (!refreshToken) {
@@ -70,6 +71,7 @@ const tokenValidationMiddleware = async (req, res, next) => {
         req.role = decodedAccessToken.userType || decodedRefreshToken.userType; // Attach user role to the request
         return next();
       } catch (err) {
+        console.log(err, 'tokenValidationMiddleware');	
         // If access token is invalid, fall back to refresh token validation
         if (err.name !== 'TokenExpiredError') {
           return res.status(403).json({ message: 'Invalid access token.' });
