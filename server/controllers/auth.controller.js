@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const courierModel = require('../models/courier.model');
 const customerModel = require('../models/customer.model');
 const sellerModel = require('../models/seller.model');
@@ -127,31 +128,51 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   const { refreshToken } = req.cookies;
-
   if (!refreshToken) {
-    return res.status(400).json({ message: 'No token provided.' });
+    return res.status(400).json({ message: 'Refresh token missing' });
   }
-
+  
   try {
-    // Find user and clear the refresh token
+    // Decode the refresh token to get user details
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-    const userModel = getModelBasedOnRole(decoded.role);
-    const user = await userModel.findById(decoded.userId);
+    const { userType } = decoded;
+    console.log(decoded,"refreshToken")
 
-    if (user) {
-      user.refreshToken = null;
-      await user.save();
+    let userModel;
+
+    // Determine the appropriate model based on the userType
+    if (userType === 'customer') userModel = customerModel;
+    else if (userType === 'seller') userModel = sellerModel;
+    else if (userType === 'courier') userModel = courierModel;
+    else return res.status(400).json({ message: 'Invalid user type' });
+
+    // Invalidate the refresh token
+    const user = await userModel.findOneAndUpdate(
+      { refreshToken },
+      { refreshToken: null }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
 
     // Clear cookies
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+    });
 
-    res.status(200).json({ true: true, message: 'Logged out successfully' });
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+    });
+
+    res.status(200).json({ success: true, message: 'Logged out successfully' });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: 'Failed to log out.', error: error.message });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 

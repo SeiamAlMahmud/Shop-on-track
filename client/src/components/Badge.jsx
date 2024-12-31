@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { User, ShoppingCart, LogOut } from "lucide-react";
 import Link from "next/link";
+import { useShopContext } from "@/context/ShopContext";
+import toast from 'react-hot-toast';
+import { useRouter } from "next/navigation";
 
 const Badge = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const { api, setType, setToken, } = useShopContext();
+    const router = useRouter();
 
     const toggleDropdown = () => {
         setIsDropdownOpen((prev) => !prev);
@@ -22,6 +27,21 @@ const Badge = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    const logout = async () => {
+        setIsDropdownOpen(false)
+        try {
+            const response = await api.post('/users/logout')
+            setType("");
+            setToken(null);
+            localStorage.clear();
+            toast.success("Logged out successfully")
+            router.push('/'); // Redirect to home page
+        } catch (error) {
+            console.log(error)
+            toast.error("Failed to log out")
+        }
+    }
 
     return (
         <div className="relative" ref={dropdownRef}>
@@ -41,7 +61,7 @@ const Badge = () => {
             {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-md z-50">
                     <ul className="py-2">
-                       <Link href={"/myprofile"}> <li
+                        <Link href={"/myprofile"}> <li
                             className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onClick={() => setIsDropdownOpen(false)}
                         >
@@ -58,9 +78,10 @@ const Badge = () => {
                         </li>
                         <li
                             className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => setIsDropdownOpen(false)}
+                            onClick={logout}
                         >
-                            <LogOut className="mr-2 text-gray-600" size={18} />
+                            <LogOut
+                                className="mr-2 text-gray-600" size={18} />
                             Logout
                         </li>
                     </ul>
