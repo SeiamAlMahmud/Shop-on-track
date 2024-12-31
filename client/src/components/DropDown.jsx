@@ -36,6 +36,7 @@ const DropDown = ({ courier, sellerData }) => {
         addedAt: sellerData?.addedAt,
         courierId: courier._id,
         quantity: quantity,
+        deliveryCharge: deliveryCharge, // Ensure deliveryCharge is included
     };
 
 

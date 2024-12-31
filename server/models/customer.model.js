@@ -30,4 +30,8 @@ customerSchema.pre('save', async function (next) {
   next();
 });
 
+// Indexes
+customerSchema.index({ email: 1 });
+customerSchema.index({ phoneNumber: 1 });
+
 module.exports = mongoose.model('Customer', customerSchema);

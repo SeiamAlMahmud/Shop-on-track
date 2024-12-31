@@ -58,4 +58,9 @@ courierSchema.methods.addVehicleHistory = function (startLocation, endLocation, 
   return this.save();
 };
 
+// Indexes
+courierSchema.index({ email: 1 });
+courierSchema.index({ phoneNumber: 1 });
+courierSchema.index({ businessName: 1 });
+
 module.exports = mongoose.model('Courier', courierSchema);

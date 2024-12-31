@@ -20,7 +20,7 @@ const sellerSchema = new mongoose.Schema(
         },
         price: { type: Number, required: true },
         weight: { type: Number, required: true },
-        isActive: {type: Boolean, default: true },
+        isActive: { type: Boolean, default: true },
         address: {
           division: { type: String, required: true },
           district: { type: String, required: true },
@@ -43,5 +43,10 @@ sellerSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
+// Indexes
+sellerSchema.index({ email: 1 });
+sellerSchema.index({ phoneNumber: 1 });
+sellerSchema.index({ businessName: 1 });
 
 module.exports = mongoose.model('Seller', sellerSchema);

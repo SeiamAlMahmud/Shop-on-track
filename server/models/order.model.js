@@ -24,7 +24,7 @@ const orderSchema = new mongoose.Schema(
       default: 'pending'
     },
     deliveryCharge: { type: Number, required: true },
-    netAmount: { type: Number, default: 10},
+    netAmount: { type: Number, default: 10 },
     location: {
       division: { type: String, required: true },
       district: { type: String, required: true },
@@ -34,6 +34,7 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Indexes
 orderSchema.index({ productId: 1 });
 orderSchema.index({ sellerId: 1 });
 orderSchema.index({ customerId: 1 });
