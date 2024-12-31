@@ -50,7 +50,7 @@ const updateProductBySeller = async (req, res) => {
     const sellerId = req.userId; // Extract seller ID from the authenticated user
     const user = req.user; // Extract seller ID from the authenticated user
     const userType = req.role; // Extract user role
-    console.log(sellerId, userType, req.body, "req.body")
+    // console.log(sellerId, userType, req.body, "req.body")
     if (userType !== "seller") {
       return res.status(401).json({
         success: false,
@@ -173,7 +173,7 @@ const getCouriersOnBaseSeller = async (req, res) => {
   try {
     const { sellerId } = req.params;
     const { decryptedData } = req.body;
-    console.log(decryptedData, "decryptedData");
+    // console.log(decryptedData, "decryptedData");
 
     if (!sellerId) {
       return res.status(400).json({ success: false, message: 'Seller ID is required' });

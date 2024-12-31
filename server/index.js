@@ -10,6 +10,7 @@ const { connectDB } = require('./config/DB/connectDB');
 const userRoute = require('./routes/auth.route');
 const productRoute = require('./routes/product.route');
 const courierRoute = require('./routes/courier.route');
+const orderRoute = require('./routes/order.route');
 
 connectDB();
 const corsOptions = {
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRoute);
 app.use('/product', productRoute);
 app.use('/courier', courierRoute);
+app.use('/order', orderRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
