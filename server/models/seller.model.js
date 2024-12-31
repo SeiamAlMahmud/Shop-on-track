@@ -29,6 +29,11 @@ const sellerSchema = new mongoose.Schema(
         addedAt: { type: Date, default: Date.now },
       },
     ],
+    orderHistory: [
+      {
+        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+      }
+    ],
   },
   { timestamps: true }
 );

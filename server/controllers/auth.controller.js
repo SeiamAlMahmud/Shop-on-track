@@ -14,7 +14,7 @@ const registration = async (req, res) => {
   const { email, password, ...otherData } = req.body;
   if (!email || !password)
     return res.status(400).json({ message: 'Email and password are required' });
-  console.log(role);
+  // console.log(role);
   try {
     let userModel;
     if (role === 'customer') userModel = customerModel;

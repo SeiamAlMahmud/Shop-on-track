@@ -21,6 +21,7 @@ const Page = () => {
                 try {
                     const result = await api.get(`/product/get-single-product/${item}`);
                     setItemData(result.data);
+                    // console.log(result.data, "item")
                 } catch (err) {
                     console.error(err);
                     setError("Failed to fetch item data.");
@@ -79,7 +80,7 @@ const Page = () => {
                 </div>
 
                 <div className="mt-6">
-                    <h2 className="grid place-items-center text-sm sm:text-xl md:text-3xl font-extrabold my-7">Available Sellers for This Item</h2>
+                    <h2 className=" text-sm sm:text-xl md:text-3xl font-extrabold my-7  flex justify-center gap-2 items-center">Available<span className="text-green-500 font-bold"> Sellers </span>  for This Item</h2>
                     {itemData.product.sellers.length > 0 ? (
                         <TableContainer component={Paper} className="shadow-black">
                             <Table style={{ tableLayout: "auto" }}>
@@ -90,7 +91,7 @@ const Page = () => {
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Weight(kg)</TableCell>
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Location</TableCell>
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Added At</TableCell>
-                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Order</TableCell>
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Action</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -100,7 +101,7 @@ const Page = () => {
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">{seller.price}</TableCell>
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">{seller.weight}</TableCell>
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">
-                                                {seller.address.subDistrict} , {seller.address.district}, {seller.address.division}
+                                                {seller.address.subDistrict} , <br /> {seller.address.district}, <br /> {seller.address.division}
                                             </TableCell>
                                             <TableCell className="text-xs sm:text-sm p-1 sm:p-2">
                                                 {new Date(seller.addedAt).toLocaleDateString()}
@@ -112,10 +113,12 @@ const Page = () => {
                                                     size="small"
                                                     onClick={() => {
                                                         const sellerData = {
+                                                            productId: itemData.product._id,
+                                                            image: itemData.product.image,
+                                                            sellerId: seller.sellerId,
                                                             sellerName: seller.fullName,
                                                             price: seller.price,
                                                             weight: seller.weight,
-                                                            product: itemData.product,
                                                             location: {
                                                                 subDistrict: seller.address.subDistrict,
                                                                 district: seller.address.district,
@@ -127,7 +130,7 @@ const Page = () => {
                                                         router.push(`/products/details/${seller._id}?data=${encodeURIComponent(encryptedSellerData)}`);
                                                     }}
                                                 >
-                                                    Order
+                                                    Details
                                                 </Button>
                                             </TableCell>
 
