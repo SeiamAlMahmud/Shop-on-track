@@ -75,7 +75,7 @@ const SellerDetails = () => {
                                 <TableHead>
                                     <TableRow className="bg-gray-300">
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">business Name</TableCell>
-                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">vehicleType</TableCell>
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2 whitespace-nowrap">vehicle Type</TableCell>
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Capacity(Kg)</TableCell>
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Location</TableCell>
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Status</TableCell>

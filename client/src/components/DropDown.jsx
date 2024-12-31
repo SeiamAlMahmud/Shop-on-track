@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import { useShopContext } from "@/context/ShopContext";
+import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 // icons
 import { RxCross1 } from "react-icons/rx";
 
 const DropDown = ({ courier, sellerData }) => {
     const [isModalOpen, setisModalOpen] = useState(false);
+    const [quantity, setQuantity] = useState(0);
+    const [deliveryCharge, setDeliveryCharge] = useState(8.50);
+    const [netAmount, setNetAmount] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    const { api } = useShopContext();
+
+    useEffect(() => {
+        const qty = quantity || 0;
+        const price = sellerData?.price || 0;
+        const calculatedNetAmount = (price * qty) + (deliveryCharge * qty);
+        setNetAmount(calculatedNetAmount);
+    }, [quantity, deliveryCharge, sellerData?.price]);
 
     const orderDetails = {
         productId: sellerData?.productId,
         sellerId: sellerData?.sellerId,
         sellerName: sellerData?.sellerName,
         price: sellerData?.price,
+        netAmount: netAmount,
         weight: sellerData?.weight,
         location: {
             subDistrict: sellerData?.location.subDistrict,
@@ -19,8 +35,24 @@ const DropDown = ({ courier, sellerData }) => {
         },
         addedAt: sellerData?.addedAt,
         courierId: courier._id,
-        quantity: undefined,
+        quantity: quantity,
+    };
 
+
+    const orderHandle = async (e) => {
+        e.preventDefault();
+        if (netAmount === 0) return toast.error("Net amount cannot be zero. Please enter a valid quantity.");
+        setLoading(true);
+        
+        try {
+            const response = await api.post("/", orderDetails);
+            console.log(response.data);
+            toast.success("Order Create Successfully.")
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -55,30 +87,47 @@ const DropDown = ({ courier, sellerData }) => {
                         </div>
                         <div className="px-5 pt-2">
                             <div className="flex flex-col g-2 items-start">
-                                <span className="font-bold text-cyan-900 text-lg mr-1">DeliveryCharge: </span> 
-                                <select>
+                                <span className="font-bold text-cyan-900 text-xl mr-1">DeliveryCharge:
+                                    <select
+                                        className="p-1 bg-gray-400 bg-opacity-80 rounded-sm ml-2"
+                                        onChange={e => setDeliveryCharge(parseFloat(e.target.value))}
+                                    >
+                                        <option value={8.50}>Inside Dhaka</option>
+                                        <option value={10.00}>Outside Dhaka</option>
+                                    </select>
+                                </span>
 
-                                </select>
-                             <div className="pt-1 ">
-                                <span>Inside Dhaka - 8.50 taka per Kg</span> <br />
-                                <span>Inside Dhaka - 8.50 taka per Kg</span>
-                                </div> 
+                                <div className="pt-1 ">
+                                    <span>Inside Dhaka - 8.50 taka per Kg</span> <br />
+                                    <span>Outside Dhaka - 10.00 taka per Kg</span>
                                 </div>
-                            <div className="flex g-2 items-start">
-                                <span className="font-bold text-cyan-900 text-lg mr-1">Net Ammount: </span> 
-                             <div className="pt-1">
-                              
-                                </div> 
+                            </div>
+                            <div className="flex flex-col g-2 items-start">
+                                <div>
+                                    <span className="font-bold text-cyan-900 text-lg mr-1">Net Amount: </span>
+                                    <span className="mt-[2px] text-lg">{netAmount.toFixed(2)}</span>
                                 </div>
+                                <div className="pt-1">
+                                    <ul className="text-sm text-gray-600 list-disc list-inside">
+                                        <li>Price per Kg: {sellerData?.price || 0}</li>
+                                        <li>Quantity: {quantity || 0}</li>
+                                        <li>Delivery Charge per Kg: {deliveryCharge}</li>
+                                        <li>Total Price: {sellerData?.price * quantity || 0}</li>
+                                        <li>Total Delivery Charge: {deliveryCharge * quantity || 0}</li>
+                                    </ul>
+                                </div>
+                            </div>
                             <p></p>
                         </div>
-                        <form className="flex flex-col gap-5 p-4">
+                        <form
+                        onSubmit={orderHandle}
+                        className="flex flex-col gap-5 p-4">
                             <div>
                                 <label
                                     htmlFor="quantity"
                                     className="text-[1rem] font-[500] text-[#464646]"
                                 >
-                                    Quantity
+                                    Quantity(Kg)
                                 </label>
                                 <input
                                     type="number"
@@ -86,26 +135,20 @@ const DropDown = ({ courier, sellerData }) => {
                                     id="quantity"
                                     min="0"
                                     step="1"
+                                    value={quantity}
                                     placeholder="Enter quantity"
+                                    onChange={e => setQuantity(parseInt(e.target.value) || 0)}
                                     className="py-2 px-3 border border-[#d1d1d1] rounded-md w-full focus:outline-none mt-1 focus:border-[#3B9DF8]"
                                 />
                             </div>
                             <button
+                                disabled={loading}
                                 type="submit"
-                                className="py-2 px-4 w-full bg-[#3B9DF8] text-[#fff] rounded-md"
+                                className="py-2 px-4 w-full bg-[#31b1c5] text-[#fff] rounded-md font-semibold"
                             >
-                                Sign In
+                                Place Order
                             </button>
                         </form>
-
-                        <div className="flex items-center justify-center w-full pb-4">
-                            <p className="text-[1rem] font-[400] text-[#464646c]">
-                                Not have any account?{" "}
-                                <a href="#" className="text-[#3B9DF8] underline">
-                                    Sign Up
-                                </a>
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>

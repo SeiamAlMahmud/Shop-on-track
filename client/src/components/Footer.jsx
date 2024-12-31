@@ -5,7 +5,6 @@ import {BsInstagram, BsLinkedin, BsTwitter} from "react-icons/bs";
 const Footer = () => {
     return (
         <div>
-
         <footer className="bg-[#0a0e2c] text-white boxShadow rounded-2xl rounded-b-none w-full p-6 lg:p-9">
             <div className="flex justify-center gap-[30px] flex-wrap w-full sm:px-32">
                 <div

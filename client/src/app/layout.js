@@ -3,6 +3,7 @@ import './globals.css';
 import { ShopProvider } from '@/context/ShopContext';
 import ResponsiveNavbar from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Toaster } from 'react-hot-toast';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -28,6 +29,10 @@ export default function RootLayout({ children }) {
       >
         <ShopProvider>
           <ResponsiveNavbar />
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+          />
           {children}
           <Footer />
         </ShopProvider>
