@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { useRouter } from "next/navigation";
 import { useShopContext } from "@/context/ShopContext";
 import Container from "@/components/Container";
+import DropDown from "@/components/DropDown";
 
 const SellerDetails = () => {
     const searchParams = useSearchParams();
@@ -109,7 +110,7 @@ const SellerDetails = () => {
 
                                             {
                                                 userType == "customer" && <TableCell className="text-xs sm:text-sm p-1 sm:p-2">
-                                                    <Button
+                                                    {/* <Button
                                                         variant="contained"
                                                         color="primary"
                                                         size="small"
@@ -132,7 +133,8 @@ const SellerDetails = () => {
                                                         }}
                                                     >
                                                         {courier.vehicleStatus == "busy" ? "Booking" : "Order"}
-                                                    </Button>
+                                                    </Button> */}
+                                                    <DropDown courier={courier} sellerData={sellerData} />
                                                 </TableCell>
                                             }
                                         </TableRow>

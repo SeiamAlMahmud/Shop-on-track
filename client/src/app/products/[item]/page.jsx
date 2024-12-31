@@ -91,7 +91,7 @@ const Page = () => {
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Weight(kg)</TableCell>
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Location</TableCell>
                                         <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Added At</TableCell>
-                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Order</TableCell>
+                                        <TableCell className="text-xs sm:text-sm p-1 sm:p-2">Action</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
