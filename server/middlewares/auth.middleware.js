@@ -83,7 +83,7 @@ const tokenValidationMiddleware = async (req, res, next) => {
     const newAccessToken = generateAccessToken(user, decodedRefreshToken.role);
     res.cookie('accessToken', newAccessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true, // Ensure secure attribute is set to true
       sameSite: 'none',
       maxAge: 15 * 60 * 1000, // 15 minutes
     });

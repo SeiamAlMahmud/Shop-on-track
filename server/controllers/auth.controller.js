@@ -36,21 +36,22 @@ const registration = async (req, res) => {
     // Set both tokens in HTTP-only cookies
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true, // Ensure secure attribute is set to true
       sameSite: 'none',
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true, // Ensure secure attribute is set to true
       sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res.status(201).json({
       success: true,
-      token: accessToken,
+      accessToken,
+      refreshToken,
       message: 'User created successfully',
       userType: role,
     });
@@ -100,15 +101,15 @@ const login = async (req, res) => {
     // Set both tokens in HTTP-only cookies
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'None',
+      secure: true, // Ensure secure attribute is set to true
+      sameSite: 'none',
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'None',
+      secure: true, // Ensure secure attribute is set to true
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -116,7 +117,8 @@ const login = async (req, res) => {
       .status(200)
       .json({
         success: true,
-        token: accessToken,
+        accessToken,
+        refreshToken,
         message: 'Login successful',
         userType: role,
       });

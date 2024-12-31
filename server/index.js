@@ -14,17 +14,18 @@ const courierRoute = require('./routes/courier.route');
 connectDB();
 const corsOptions = {
   origin: ['http://localhost:3000'], // Add your frontend URLs
-  methods: ['GET', 'POST', "PUT"], // Specify allowed HTTP methods
+  methods: ['GET', 'POST', 'PUT'], // Specify allowed HTTP methods
   allowedHeaders: ['Authorization', 'Content-Type'], // Allow the Authorization header for Bearer token
   credentials: true, // Allow cookies to be sent
 };
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 
 app.use(cors(corsOptions));
+
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
