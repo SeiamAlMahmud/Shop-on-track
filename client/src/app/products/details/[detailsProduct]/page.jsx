@@ -60,7 +60,14 @@ const SellerDetails = () => {
                             <p><strong>Price:</strong> {sellerData.price}</p>
                             <p><strong>Weight:</strong> {sellerData.weight} kg</p>
                             <p><strong>Location:</strong> {sellerData.location.subDistrict}, {sellerData.location.district}, {sellerData.location.division}</p>
-                            <p><strong>Added At:</strong> {new Date(sellerData.addedAt).toLocaleDateString()}</p></div>
+                            <p><strong>Added At:</strong> {new Date(sellerData.addedAt).toLocaleDateString()}</p>
+                            <p>
+                                <strong className="font-extrabold text-lg"> Contact for more Details: </strong> 
+                                <a href={`tel:${sellerData?.phoneNumber}`} className="text-blue-600 underline">
+                                    {sellerData?.phoneNumber}
+                                </a>
+                            </p>
+                        </div>
                     </div>
                     <div>
                         <img
