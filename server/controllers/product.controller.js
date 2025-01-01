@@ -75,6 +75,7 @@ const updateProductBySeller = async (req, res) => {
             sellerId,
             price,
             fullName: user.fullName,
+            fullName: user.phoneNumber,
             weight,
             address: { division, district, subDistrict },
           },
