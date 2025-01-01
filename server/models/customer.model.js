@@ -15,6 +15,11 @@ const customerSchema = new mongoose.Schema(
     },
     dateOfBirth: { type: Date },
     refreshToken: { type: String },
+    orderHistory: [
+      {
+        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+      }
+    ],
   },
   { timestamps: true }
 );
@@ -24,5 +29,9 @@ customerSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
+// Indexes
+customerSchema.index({ email: 1 });
+customerSchema.index({ phoneNumber: 1 });
 
 module.exports = mongoose.model('Customer', customerSchema);

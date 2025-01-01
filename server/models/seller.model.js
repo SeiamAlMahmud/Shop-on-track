@@ -19,7 +19,8 @@ const sellerSchema = new mongoose.Schema(
           required: true,
         },
         price: { type: Number, required: true },
-        isActive: {type: Boolean, default: true },
+        weight: { type: Number, required: true },
+        isActive: { type: Boolean, default: true },
         address: {
           division: { type: String, required: true },
           district: { type: String, required: true },
@@ -27,6 +28,11 @@ const sellerSchema = new mongoose.Schema(
         },
         addedAt: { type: Date, default: Date.now },
       },
+    ],
+    orderHistory: [
+      {
+        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+      }
     ],
   },
   { timestamps: true }
@@ -37,5 +43,10 @@ sellerSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
+// Indexes
+sellerSchema.index({ email: 1 });
+sellerSchema.index({ phoneNumber: 1 });
+sellerSchema.index({ businessName: 1 });
 
 module.exports = mongoose.model('Seller', sellerSchema);

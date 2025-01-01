@@ -15,6 +15,8 @@ const productSchema = new mongoose.Schema(
           ref: 'Seller',
           required: true,
         },
+        weight: { type: Number, required: true },
+        fullName: { type: String, required: true },
         isActive: {type: Boolean, default: true },
         price: { type: Number, required: true },
         address: {

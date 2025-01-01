@@ -16,6 +16,27 @@ const courierSchema = new mongoose.Schema(
     driverLicense: { type: String, required: true },
     deliveryCapacity: { type: Number, required: true },
     refreshToken: { type: String },
+    bookingAvailability: { type: Boolean, default: true },
+    bookingDates: [{ type: Date }],
+    vehicleStatus: { type: String, enum: ['available', 'busy', 'maintenance'], default: 'available' },
+    division: { type: String, default: "" },
+    district: { type: String, default: "" },
+    subDistrict: { type: String, default: "" },
+    vehicleHistory: [
+      {
+        startLocation: { type: String, required: true },
+        endLocation: { type: String, required: true },
+        startDate: { type: Date, required: true },
+        endDate: { type: Date, required: true },
+        isComplete: { type: Boolean, default: false },
+      }
+    ],
+    status: { type: String, enum: ['active', 'inactive'], default: 'active' },
+    orderHistory: [
+      {
+        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+      }
+    ],
   },
   { timestamps: true }
 );
@@ -25,5 +46,21 @@ courierSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
+courierSchema.methods.addBookingDate = function (date) {
+  this.bookingDates.push(date);
+  this.vehicleStatus = 'busy';
+  return this.save();
+};
+
+courierSchema.methods.addVehicleHistory = function (startLocation, endLocation, startDate, endDate) {
+  this.vehicleHistory.push({ startLocation, endLocation, startDate, endDate, isComplete: false });
+  return this.save();
+};
+
+// Indexes
+courierSchema.index({ email: 1 });
+courierSchema.index({ phoneNumber: 1 });
+courierSchema.index({ businessName: 1 });
 
 module.exports = mongoose.model('Courier', courierSchema);
