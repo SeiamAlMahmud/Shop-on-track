@@ -1,4 +1,5 @@
 import { useShopContext } from "@/context/ShopContext";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -11,6 +12,7 @@ const DropDown = ({ courier, sellerData }) => {
     const [deliveryCharge, setDeliveryCharge] = useState(8.50);
     const [netAmount, setNetAmount] = useState(0);
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const { api } = useShopContext();
 
@@ -49,6 +51,7 @@ const DropDown = ({ courier, sellerData }) => {
             const response = await api.post("/order/new-order", orderDetails, { withCredentials: true });
             console.log(response.data);
             toast.success("Order Create Successfully.")
+            router.push("/myprofile");
         } catch (error) {
             console.log(error);
         } finally {
@@ -108,6 +111,7 @@ const DropDown = ({ courier, sellerData }) => {
                                     <span className="font-bold text-cyan-900 text-lg mr-1">Net Amount: </span>
                                     <span className="mt-[2px] text-lg">{netAmount.toFixed(2)}</span>
                                 </div>
+                                <hr className="h-[1px] w-full bg-black" />
                                 <div className="pt-1">
                                     <ul className="text-sm text-gray-600 list-disc list-inside">
                                         <li>Price per Kg: {sellerData?.price || 0}</li>
