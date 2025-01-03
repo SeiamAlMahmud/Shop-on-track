@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema(
   {
     productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+    title: { type: String, required: true }, // Change to String
     sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Seller', required: true },
     customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
     courierId: { type: mongoose.Schema.Types.ObjectId, ref: 'Courier', required: true },

@@ -114,6 +114,7 @@ const Page = () => {
                                                     onClick={() => {
                                                         const sellerData = {
                                                             productId: itemData.product._id,
+                                                            title: itemData.product.title,
                                                             image: itemData.product.image,
                                                             sellerId: seller.sellerId,
                                                             sellerName: seller.fullName,

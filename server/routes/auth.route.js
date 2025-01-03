@@ -6,6 +6,7 @@ const {
   refreshAccessToken,
   login,
   logout,
+  getProfile,
 } = require('../controllers/auth.controller');
 const tokenValidationMiddleware = require('../middlewares/auth.middleware');
 
@@ -24,5 +25,9 @@ router.get('/get-data', tokenValidationMiddleware, async (req, res) => {
   const { refreshToken } = req.cookies;
   return res.status(200).json({ success: true, refreshToken, userId });
 });
+
+// get profile 
+router.get('/getProfile/:role',tokenValidationMiddleware, getProfile);
+
 
 module.exports = router;

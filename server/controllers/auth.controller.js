@@ -133,12 +133,12 @@ const logout = async (req, res) => {
   if (!refreshToken) {
     return res.status(400).json({ message: 'Refresh token missing' });
   }
-  
+
   try {
     // Decode the refresh token to get user details
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const { userType } = decoded;
-    console.log(decoded,"refreshToken")
+    console.log(decoded, "refreshToken")
 
     let userModel;
 
@@ -208,4 +208,34 @@ const refreshAccessToken = async (req, res) => {
   }
 };
 
-module.exports = { registration, login, logout, refreshAccessToken };
+
+const getProfile = async (req, res) => {
+  const { role } = req.params;
+  const userId = req.userId;
+  console.log(userId, 'userId');
+  try {
+    let userModel;
+    if (role === 'customer') userModel = customerModel;
+    else if (role === 'seller') userModel = sellerModel;
+    else if (role === 'courier') userModel = courierModel;
+    else return res.status(400).json({ message: 'Invalid role' });
+
+    let user = await userModel.findById(userId).select('-password -refreshToken');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.orderHistory.length > 0) {
+      user = await user.populate({
+        path: 'orderHistory.orderId',
+        populate: { path: 'productId sellerId courierId', select: '-password -refreshToken' }
+      });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+module.exports = { registration, login, logout, refreshAccessToken, getProfile };

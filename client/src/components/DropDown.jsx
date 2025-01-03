@@ -8,14 +8,14 @@ import { RxCross1 } from "react-icons/rx";
 
 const DropDown = ({ courier, sellerData }) => {
     const [isModalOpen, setisModalOpen] = useState(false);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(100);
     const [deliveryCharge, setDeliveryCharge] = useState(8.50);
     const [netAmount, setNetAmount] = useState(0);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const { api } = useShopContext();
-
+// console.log(first)
     useEffect(() => {
         const qty = quantity || 0;
         const price = sellerData?.price || 0;
@@ -24,6 +24,7 @@ const DropDown = ({ courier, sellerData }) => {
     }, [quantity, deliveryCharge, sellerData?.price]);
 
     const orderDetails = {
+        title: sellerData?.title, // Ensure title is included
         productId: sellerData?.productId,
         sellerId: sellerData?.sellerId,
         sellerName: sellerData?.sellerName,
