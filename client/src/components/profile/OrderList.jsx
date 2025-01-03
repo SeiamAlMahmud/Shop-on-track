@@ -1,6 +1,6 @@
 import React from "react";
 
-const OrderList = ({ type }) => {
+const OrderList = ({ type,userProfile }) => {
   const orders = [
     { id: 1, item: "Product A", status: "Delivered", date: "2024-12-01" },
     { id: 2, item: "Product B", status: "Pending", date: "2024-12-02" },
@@ -19,9 +19,9 @@ const OrderList = ({ type }) => {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
-            <tr key={order.id}>
-              <td className="border px-4 py-2">{order.id}</td>
+          {userProfile && userProfile?.orderHistory.map((order,idx) => (
+            <tr key={order._id}>
+              <td className="border px-4 py-2">{idx + 1}</td>
               <td className="border px-4 py-2">{order.item}</td>
               <td className="border px-4 py-2">{order.status}</td>
               <td className="border px-4 py-2">{order.date}</td>

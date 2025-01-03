@@ -57,7 +57,7 @@ const getUserProfile = async () => {
         {isEditing && <EditPopup onClose={closeEditPopup} type={Type} />}
 
         {/* Order List */}
-        <OrderList type={Type} />
+        <OrderList userProfile={userProfile} type={Type} />
       </div>
     </Container>
   );
