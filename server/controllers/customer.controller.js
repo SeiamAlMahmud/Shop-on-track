@@ -6,7 +6,7 @@ const getTotalOrders = async (req, res) => {
   const { customerId } = req.params;
 
   try {
-    const customer = await Customer.findById(customerId).populate('orderHistory.orderId');
+    const customer = await Customer.findById(customerId).populate('orderHistory');
     if (!customer) {
       return res.status(404).json({ message: 'Customer not found' });
     }

@@ -225,11 +225,13 @@ const getProfile = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (user.orderHistory.length > 0) {
+    if (user.orderHistory && user.orderHistory.length > 0) {
       user = await user.populate({
-        path: 'orderHistory.orderId',
+        path: 'orderHistory',
         populate: { path: 'productId sellerId courierId', select: '-password -refreshToken' }
       });
+    } else {
+      user.orderHistory = [];
     }
 
     res.status(200).json({ user });

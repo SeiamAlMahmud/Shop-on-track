@@ -34,7 +34,9 @@ const courierSchema = new mongoose.Schema(
     status: { type: String, enum: ['active', 'inactive'], default: 'active' },
     orderHistory: [
       {
-        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order',
+        required: true,
       }
     ],
   },
@@ -44,6 +46,14 @@ const courierSchema = new mongoose.Schema(
 courierSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+// Ensure orderHistory is initialized as an empty array
+courierSchema.pre('save', function (next) {
+  if (!this.orderHistory) {
+    this.orderHistory = [];
+  }
   next();
 });
 

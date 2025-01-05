@@ -15,17 +15,17 @@ const createOrder = async (req, res) => {
 
     // Add order to customer's order history
     await Customer.findByIdAndUpdate(userId, {
-      $push: { orderHistory: { orderId: newOrder._id } },
+      $push: { orderHistory: newOrder._id },
     });
 
     // Add order to seller's order history
     await Seller.findByIdAndUpdate(data.sellerId, {
-      $push: { orderHistory: { orderId: newOrder._id } },
+      $push: { orderHistory: newOrder._id },
     });
 
     // Add order to courier's order history
     await Courier.findByIdAndUpdate(data.courierId, {
-      $push: { orderHistory: { orderId: newOrder._id } },
+      $push: { orderHistory: newOrder._id },
     });
 
     res.status(201).json({ message: 'Order created successfully', order: newOrder });

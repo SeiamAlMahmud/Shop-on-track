@@ -1,4 +1,5 @@
 import React from "react";
+import { format } from 'date-fns';
 
 const OrderList = ({ type,userProfile }) => {
   const orders = [
@@ -22,9 +23,9 @@ const OrderList = ({ type,userProfile }) => {
           {userProfile && userProfile?.orderHistory.map((order,idx) => (
             <tr key={order._id}>
               <td className="border px-4 py-2">{idx + 1}</td>
-              <td className="border px-4 py-2">{order.item}</td>
-              <td className="border px-4 py-2">{order.status}</td>
-              <td className="border px-4 py-2">{order.date}</td>
+              <td className="border px-4 py-2 text-center">{order.title}</td>
+              <td className="border px-4 py-2 text-center">{order.status}</td>
+              <td className="border px-4 py-2 text-center">{format(new Date(order.orderDate), 'MM-do-yy HH:mm:ss')}</td>
             </tr>
           ))}
         </tbody>
