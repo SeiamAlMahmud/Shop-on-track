@@ -19,7 +19,7 @@ const OrderListForCustomer = ({ type,userProfile }) => {
         <tbody>
           {userProfile && userProfile?.orderHistory.map((order,idx) => (
             <tr key={order._id}>
-              <td className="border px-4 py-2">{idx + 1}</td>
+              <td className="border px-4 py-2 text-center">{idx + 1}</td>
               <td className="border px-4 py-2 text-center">{order.title}</td>
               <td className="border px-4 py-2 text-center">{order.status}</td>
               <td className="border px-4 py-2 text-center">{format(new Date(order.orderDate), 'MM-do-yy HH:mm:ss')}</td>

@@ -22,10 +22,10 @@ const OrderListForCourier = ({ type, userProfile, updateOrderStatus }) => {
         <tbody>
           {userProfile && userProfile?.orderHistory.map((order, idx) => (
             <tr key={order._id}>
-              <td className="border px-4 py-2">{idx + 1}</td>
+              <td className="border px-4 py-2 text-center">{idx + 1}</td>
               <td className="border px-4 py-2 text-center">{order.title}</td>
               <td className="border px-4 py-2 text-center">
-                <select value={order.status} onChange={(e) => handleStatusChange(order._id, e)}>
+                <select className="p-1 rounded-md" value={order.status} onChange={(e) => handleStatusChange(order._id, e)}>
                   <option value="pending" disabled>pending</option>
                   <option value="shipped" disabled>shipped</option>
                   <option value="delivered">delivered</option>

@@ -32,11 +32,11 @@ const Badge = () => {
         setIsDropdownOpen(false)
         try {
             const response = await api.post('/users/logout')
+            router.push('/'); // Redirect to home page
+            toast.success("Logged out successfully")
             setType("");
             setToken(null);
             localStorage.clear();
-            toast.success("Logged out successfully")
-            router.push('/'); // Redirect to home page
         } catch (error) {
             console.log(error)
             toast.error("Failed to log out")
