@@ -39,7 +39,7 @@ const ProfilePage = () => {
 
   return (
     <Container>
-      <div className="p-4">
+      <div className="p-4 h-screen">
         {/* Profile Header */}
         <ProfileHeader type={Type} onEdit={handleEdit} />
 
@@ -50,7 +50,7 @@ const ProfilePage = () => {
         {isEditing && <EditPopup onClose={closeEditPopup} type={Type} />}
 
         {/* Order List */}
-        {userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
+        {Type == "customer" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
           <OrderList userProfile={userProfile} type={Type} />
         ) : (
           <div>You have no orders</div>

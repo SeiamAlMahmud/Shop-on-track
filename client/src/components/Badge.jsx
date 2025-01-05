@@ -69,13 +69,13 @@ const Badge = () => {
                             Profile
                         </li>
                         </Link>
-                        <li
+                        {/* <li
                             className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onClick={() => setIsDropdownOpen(false)}
                         >
                             <ShoppingCart className="mr-2 text-gray-600" size={18} />
                             Orders
-                        </li>
+                        </li> */}
                         <li
                             className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
                             onClick={logout}

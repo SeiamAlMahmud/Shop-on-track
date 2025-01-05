@@ -228,7 +228,7 @@ const getProfile = async (req, res) => {
     if (user.orderHistory && user.orderHistory.length > 0) {
       user = await user.populate({
         path: 'orderHistory',
-        populate: { path: 'productId sellerId courierId', select: '-password -refreshToken' }
+        populate: { path: 'productId sellerId courierId', select: '-password -refreshToken -email' }
       });
     } else {
       user.orderHistory = [];
