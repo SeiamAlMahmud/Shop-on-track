@@ -1,7 +1,7 @@
 import React from "react";
 import { format } from 'date-fns';
 
-const OrderListForCustomer = ({ type,userProfile }) => {
+const OrderListForCourier = ({ type,userProfile }) => {
 
 
   return (
@@ -31,4 +31,4 @@ const OrderListForCustomer = ({ type,userProfile }) => {
   );
 };
 
-export default OrderListForCustomer;
+export default OrderListForCourier;

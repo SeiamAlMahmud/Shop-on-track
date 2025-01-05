@@ -5,9 +5,11 @@ import { useShopContext } from "@/context/ShopContext";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import ProfileDetails from "@/components/profile/ProfileDetails";
 import EditPopup from "@/components/profile/EditPopup";
-import OrderList from "@/components/profile/OrderList";
+import OrderListForCustomer from "@/components/profile/OrderList";
 import Container from "@/components/Container";
 import { useRouter } from "next/navigation";
+import OrderListForSeller from "@/components/profile/OrderListForSeller";
+import OrderListForCourier from "@/components/profile/OrderListForCourier";
 
 const ProfilePage = () => {
   const { token, Type, api } = useShopContext();
@@ -51,9 +53,19 @@ const ProfilePage = () => {
 
         {/* Order List */}
         {Type == "customer" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
-          <OrderList userProfile={userProfile} type={Type} />
+          <OrderListForCustomer userProfile={userProfile} type={Type} />
         ) : (
-          <div>You have no orders</div>
+          <></>
+        )}
+        {Type == "seller" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
+          <OrderListForSeller userProfile={userProfile} type={Type} />
+        ) : (
+          <></>
+        )}
+        {Type == "courier" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
+          <OrderListForCourier userProfile={userProfile} type={Type} />
+        ) : (
+          <></>
         )}
       </div>
     </Container>
