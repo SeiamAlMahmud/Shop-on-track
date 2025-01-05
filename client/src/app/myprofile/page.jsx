@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { useShopContext } from "@/context/ShopContext";
@@ -10,6 +10,7 @@ import Container from "@/components/Container";
 import { useRouter } from "next/navigation";
 import OrderListForSeller from "@/components/profile/OrderListForSeller";
 import OrderListForCourier from "@/components/profile/OrderListForCourier";
+import toast from 'react-hot-toast';
 
 const ProfilePage = () => {
   const { token, Type, api } = useShopContext();
@@ -39,6 +40,17 @@ const ProfilePage = () => {
     }
   };
 
+  const updateOrderStatus = async (orderId, status) => {
+    try {
+      const response = await api.put(`/order/${orderId}/status`, { status }, { withCredentials: true });
+      toast.success('Order status updated successfully!');
+      getUserProfile(); // Refresh the profile data
+    } catch (error) {
+      console.error('Failed to update order status:', error.response?.data || error.message);
+      toast.error('Failed to update order status. Please try again.');
+    }
+  };
+
   return (
     <Container>
       <div className="p-4 h-screen">
@@ -58,12 +70,12 @@ const ProfilePage = () => {
           <></>
         )}
         {Type == "seller" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
-          <OrderListForSeller userProfile={userProfile} type={Type} />
+          <OrderListForSeller userProfile={userProfile} type={Type} updateOrderStatus={updateOrderStatus} />
         ) : (
           <></>
         )}
         {Type == "courier" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
-          <OrderListForCourier userProfile={userProfile} type={Type} />
+          <OrderListForCourier userProfile={userProfile} type={Type} updateOrderStatus={updateOrderStatus} />
         ) : (
           <></>
         )}

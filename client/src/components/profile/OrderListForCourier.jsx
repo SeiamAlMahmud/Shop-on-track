@@ -1,8 +1,11 @@
 import React from "react";
 import { format } from 'date-fns';
 
-const OrderListForCourier = ({ type,userProfile }) => {
-
+const OrderListForCourier = ({ type, userProfile, updateOrderStatus }) => {
+  const handleStatusChange = (orderId, event) => {
+    const newStatus = event.target.value;
+    updateOrderStatus(orderId, newStatus);
+  };
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md mt-4">
@@ -17,11 +20,18 @@ const OrderListForCourier = ({ type,userProfile }) => {
           </tr>
         </thead>
         <tbody>
-          {userProfile && userProfile?.orderHistory.map((order,idx) => (
+          {userProfile && userProfile?.orderHistory.map((order, idx) => (
             <tr key={order._id}>
               <td className="border px-4 py-2">{idx + 1}</td>
               <td className="border px-4 py-2 text-center">{order.title}</td>
-              <td className="border px-4 py-2 text-center">{order.status}</td>
+              <td className="border px-4 py-2 text-center">
+                <select value={order.status} onChange={(e) => handleStatusChange(order._id, e)}>
+                  <option value="pending" disabled>pending</option>
+                  <option value="shipped" disabled>shipped</option>
+                  <option value="delivered">delivered</option>
+                  <option value="cancelled">cancelled</option>
+                </select>
+              </td>
               <td className="border px-4 py-2 text-center">{format(new Date(order.orderDate), 'MM-do-yy HH:mm:ss')}</td>
             </tr>
           ))}
