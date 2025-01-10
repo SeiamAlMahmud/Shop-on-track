@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { format } from 'date-fns';
 import Container from '../Container';
 const SeparateOrderCourier = ({
@@ -15,7 +15,6 @@ const SeparateOrderCourier = ({
   };
   return (
     <Container>
-
       <div className="p-4 bg-white rounded-lg shadow-md mt-4">
         <h2 className="text-lg font-semibold mb-4">{Type} Orders</h2>
         <table className="w-full border-collapse border">
@@ -32,7 +31,9 @@ const SeparateOrderCourier = ({
               orderHistory.map((order, idx) => (
                 <tr key={order._id}>
                   <td className="border px-4 py-2 text-center">{idx + 1}</td>
-                  <td className="border px-4 py-2 text-center">{order.title}</td>
+                  <td className="border px-4 py-2 text-center">
+                    {order.title}
+                  </td>
                   <td className="border px-4 py-2 text-center">
                     <select
                       className="p-1 rounded-md"
@@ -42,18 +43,21 @@ const SeparateOrderCourier = ({
                       <option value="pending" disabled>
                         pending
                       </option>
-                      <option
-                        value="shipped"
-                        disabled
-                      >
+                      <option value="shipped" disabled>
                         shipped
                       </option>
-                      <option value="delivered" disabled={order.status === 'cancelled' || order.status === 'pending' }>
+                      <option
+                        value="delivered"
+                        disabled={
+                          order.status === 'cancelled' ||
+                          order.status === 'pending'
+                        }
+                      >
                         delivered
                       </option>
                       <option
                         value="cancelled"
-                        disabled={order.status === 'pending' }
+                        disabled={order.status === 'pending'}
                       >
                         cancelled
                       </option>
@@ -94,7 +98,7 @@ const SeparateOrderCourier = ({
         </div>
       </div>
     </Container>
-  )
-}
+  );
+};
 
-export default SeparateOrderCourier
+export default SeparateOrderCourier;

@@ -91,12 +91,12 @@ const Page = () => {
       case 'courier':
         return (
           <SeparateOrderCourier
-          handlePageChange={handlePageChange}
-          orderHistory={orderHistory}
-          page={page}
-          totalPages={totalPages}
-          Type={Type}
-          updateOrderStatus={updateOrderStatus}
+            handlePageChange={handlePageChange}
+            orderHistory={orderHistory}
+            page={page}
+            totalPages={totalPages}
+            Type={Type}
+            updateOrderStatus={updateOrderStatus}
           />
         );
       default:

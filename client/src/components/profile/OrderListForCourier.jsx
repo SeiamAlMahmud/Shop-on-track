@@ -26,29 +26,33 @@ const OrderListForCourier = ({ type, userProfile, updateOrderStatus }) => {
                 <td className="border px-4 py-2 text-center">{idx + 1}</td>
                 <td className="border px-4 py-2 text-center">{order.title}</td>
                 <td className="border px-4 py-2 text-center">
-                <select
-                      className="p-1 rounded-md"
-                      value={order.status}
-                      onChange={(e) => handleStatusChange(order._id, e)}
+                  <select
+                    className="p-1 rounded-md"
+                    value={order.status}
+                    onChange={(e) => handleStatusChange(order._id, e)}
+                  >
+                    <option value="pending" disabled>
+                      pending
+                    </option>
+                    <option value="shipped" disabled>
+                      shipped
+                    </option>
+                    <option
+                      value="delivered"
+                      disabled={
+                        order.status === 'cancelled' ||
+                        order.status === 'pending'
+                      }
                     >
-                      <option value="pending" disabled>
-                        pending
-                      </option>
-                      <option
-                        value="shipped"
-                        disabled
-                      >
-                        shipped
-                      </option>
-                      <option value="delivered" disabled={order.status === 'cancelled'}>
-                        delivered
-                      </option>
-                      <option
-                        value="cancelled"
-                      >
-                        cancelled
-                      </option>
-                    </select>
+                      delivered
+                    </option>
+                    <option
+                      value="cancelled"
+                      disabled={order.status === 'pending'}
+                    >
+                      cancelled
+                    </option>
+                  </select>
                 </td>
                 <td className="border px-4 py-2 text-center">
                   {format(new Date(order.orderDate), 'MM-do-yy HH:mm:ss')}
