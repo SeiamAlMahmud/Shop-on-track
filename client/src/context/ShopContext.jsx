@@ -36,20 +36,20 @@ export const ShopProvider = ({ children }) => {
     // refreshToken();
   }, [token, Type]);
 
-
-
   const refreshToken = async () => {
     try {
-      const response = await api.get(`/users/refresh`, { withCredentials: true });
+      const response = await api.get(`/users/refresh`, {
+        withCredentials: true,
+      });
       // console.log(response,"response")
     } catch (error) {
-      console.log(error)
+      console.log(error);
       router.push('/'); // Redirect to home page
-      setType("");
+      setType('');
       setToken(null);
       localStorage.clear();
     }
-  }
+  };
 
   // You can add more logic to manage your auth state (login, logout, etc.)
   const contain = {

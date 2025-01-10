@@ -59,7 +59,9 @@ const page = () => {
       }
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
-      toast.error(error.response?.data?.message || 'Login failed! Please try again.');
+      toast.error(
+        error.response?.data?.message || 'Login failed! Please try again.'
+      );
     }
   };
 

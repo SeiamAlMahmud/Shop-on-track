@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { format } from 'date-fns';
 
 const OrderListForSeller = ({ type, userProfile, updateOrderStatus }) => {
@@ -20,21 +20,45 @@ const OrderListForSeller = ({ type, userProfile, updateOrderStatus }) => {
           </tr>
         </thead>
         <tbody>
-          {userProfile && userProfile?.orderHistory.map((order, idx) => (
-            <tr key={order._id}>
-              <td className="border px-4 py-2 text-center">{idx + 1}</td>
-              <td className="border px-4 py-2 text-center">{order.title}</td>
-              <td className="border px-4 py-2 text-center">
-                <select className="p-1 rounded-md" value={order.status} onChange={(e) => handleStatusChange(order._id, e)}>
-                  <option value="pending" disabled>pending</option>
-                  <option value="shipped" disabled={order.status === "delivered" || order.status === "cancelled"}>shipped</option>
-                  <option value="delivered" disabled>delivered</option>
-                  <option value="cancelled" disabled={order.status === "delivered"}>cancelled</option>
-                </select>
-              </td>
-              <td className="border px-4 py-2 text-center">{format(new Date(order.orderDate), 'MM-do-yy HH:mm:ss')}</td>
-            </tr>
-          ))}
+          {userProfile &&
+            userProfile?.orderHistory.map((order, idx) => (
+              <tr key={order._id}>
+                <td className="border px-4 py-2 text-center">{idx + 1}</td>
+                <td className="border px-4 py-2 text-center">{order.title}</td>
+                <td className="border px-4 py-2 text-center">
+                  <select
+                    className="p-1 rounded-md"
+                    value={order.status}
+                    onChange={(e) => handleStatusChange(order._id, e)}
+                  >
+                    <option value="pending" disabled>
+                      pending
+                    </option>
+                    <option
+                      value="shipped"
+                      disabled={
+                        order.status === 'delivered' ||
+                        order.status === 'cancelled'
+                      }
+                    >
+                      shipped
+                    </option>
+                    <option value="delivered" disabled>
+                      delivered
+                    </option>
+                    <option
+                      value="cancelled"
+                      disabled={order.status === 'delivered'}
+                    >
+                      cancelled
+                    </option>
+                  </select>
+                </td>
+                <td className="border px-4 py-2 text-center">
+                  {format(new Date(order.orderDate), 'MM-do-yy HH:mm:ss')}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

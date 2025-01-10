@@ -29,10 +29,7 @@ export default function RootLayout({ children }) {
       >
         <ShopProvider>
           <ResponsiveNavbar />
-          <Toaster
-            position="top-right"
-            reverseOrder={false}
-          />
+          <Toaster position="top-right" reverseOrder={false} />
           {children}
           <Footer />
         </ShopProvider>
