@@ -46,6 +46,8 @@ const Page = () => {
     };
 
 
+    
+
 
     const renderOrderList = () => {
         switch (Type) {
@@ -56,6 +58,7 @@ const Page = () => {
                         orderHistory={orderHistory}
                         page={page}
                         totalPages={totalPages}
+                        Type={Type}
                     />
                 );
             case "seller":
@@ -83,7 +86,7 @@ const Page = () => {
         <Container>
             <div className="h-screen">
                 <div className="flex justify-center">
-                    <h2>Your All Orders</h2>
+                    <h2 className="text-2xl font-extrabold my-10">Your All Orders</h2>
                 </div>
                 {orderHistory && orderHistory.length > 0 ? (
                     renderOrderList()

@@ -33,7 +33,7 @@ export const ShopProvider = ({ children }) => {
     if (usrType) {
       setType(usrType);
     }
-    refreshToken();
+    // refreshToken();
   }, [token, Type]);
 
 

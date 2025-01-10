@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 import Link from "next/link";
 
 const ProfilePage = () => {
-  const { token, Type, api,setType,setToken } = useShopContext();
+  const { token, Type, api, setType, setToken } = useShopContext();
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -54,19 +54,19 @@ const ProfilePage = () => {
   };
 
   const logout = async () => {
-    
+
     try {
-        const response = await api.post('/users/logout')
-        router.push('/'); // Redirect to home page
-        toast.success("Logged out successfully")
-        setType("");
-        setToken(null);
-        localStorage.clear();
+      const response = await api.post('/users/logout')
+      router.push('/'); // Redirect to home page
+      toast.success("Logged out successfully")
+      setType("");
+      setToken(null);
+      localStorage.clear();
     } catch (error) {
-        console.log(error)
-        toast.error("Failed to log out")
+      console.log(error)
+      toast.error("Failed to log out")
     }
-}
+  }
   return (
     <Container>
       <div className="p-4 h-screen">
@@ -80,26 +80,38 @@ const ProfilePage = () => {
         {isEditing && <EditPopup onClose={closeEditPopup} type={Type} />}
 
         {/* Order List */}
-        {Type == "customer" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
+        {Type == "customer" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ? (
           <OrderListForCustomer userProfile={userProfile} type={Type} />
         ) : (
           <></>
         )}
-        {Type == "seller" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
+        {Type == "seller" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ? (
           <OrderListForSeller userProfile={userProfile} type={Type} updateOrderStatus={updateOrderStatus} />
         ) : (
           <></>
         )}
-        {Type == "courier" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ?(
+        {Type == "courier" && userProfile && userProfile.orderHistory && userProfile.orderHistory.length !== 0 ? (
           <OrderListForCourier userProfile={userProfile} type={Type} updateOrderStatus={updateOrderStatus} />
         ) : (
           <></>
         )}
         <div className="flex items-end justify-end">
           <Link href={"/orders"}>
-          <button className="mt-5 bg-slate-500 p-1 block text-white rounded-md hover:text-blue-200 cursor-pointer px-2">See More...</button> 
+
+           {/* From Uiverse.io by Javierrocadev  */}
+            <button class="group relative border hover:border-sky-600 duration-500 group cursor-pointer text-sky-50  overflow-hidden h-10 w-44 rounded-md bg-sky-800 p-2 flex justify-center items-center font-extrabold mt-6">
+              <div class="absolute z-10 w-48 h-48 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-900 delay-150 group-hover:delay-75"></div>
+              <div class="absolute z-10 w-40 h-40 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-800 delay-150 group-hover:delay-100"></div>
+              <div class="absolute z-10 w-32 h-32 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-700 delay-150 group-hover:delay-150"></div>
+              <div class="absolute z-10 w-24 h-24 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-600 delay-150 group-hover:delay-200"></div>
+              <div class="absolute z-10 w-16 h-16 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-500 delay-150 group-hover:delay-300"></div>
+              <p class="z-10 group-hover:scale-105 duration-500">See More...</p>
+            </button>
+
+
+
           </Link>
-          </div>
+        </div>
       </div>
     </Container>
   );
