@@ -7,6 +7,7 @@ import OrderListForCourier from '@/components/profile/OrderListForCourier';
 import { useShopContext } from '@/context/ShopContext';
 import SeparateOrderCustomer from '@/components/SeparateOrder/SeparateOrderCustomer';
 import SeparateOrderSeller from '@/components/SeparateOrder/SeparateOrderSeller';
+import SeparateOrderCourier from '@/components/SeparateOrder/SeparateOrderCourier';
 
 const Page = () => {
   const { token, Type, api } = useShopContext();
@@ -89,10 +90,13 @@ const Page = () => {
         );
       case 'courier':
         return (
-          <OrderListForCourier
-            orderHistory={orderHistory}
-            type={Type}
-            updateOrderStatus={updateOrderStatus}
+          <SeparateOrderCourier
+          handlePageChange={handlePageChange}
+          orderHistory={orderHistory}
+          page={page}
+          totalPages={totalPages}
+          Type={Type}
+          updateOrderStatus={updateOrderStatus}
           />
         );
       default:
