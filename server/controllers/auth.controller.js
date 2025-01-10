@@ -161,13 +161,13 @@ const logout = async (req, res) => {
     // Clear cookies
     res.clearCookie('accessToken', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
     });
 
     res.clearCookie('refreshToken', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
     });
 
@@ -182,13 +182,35 @@ const refreshAccessToken = async (req, res) => {
   const { refreshToken } = req.cookies;
 
   if (!refreshToken) {
+    // Clear cookies if no refreshToken is found
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
     return res.status(401).json({ message: 'Refresh token missing' });
   }
 
   try {
     // Validate the refresh token
-    const decoded = await validateRefreshToken(refreshToken); // Example with `customerModel`
+    const decoded = await validateRefreshToken(refreshToken);
     if (!decoded) {
+      // Clear cookies if the refresh token is invalid or expired
+      res.clearCookie('accessToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
       return res
         .status(403)
         .json({ message: 'Invalid or expired refresh token' });
@@ -196,6 +218,13 @@ const refreshAccessToken = async (req, res) => {
 
     // Generate a new access token
     const accessToken = generateAccessToken(decoded, decoded.userType);
+        // Set both tokens in HTTP-only cookies
+        res.cookie('accessToken', accessToken, {
+          httpOnly: true,
+          secure: true, // Ensure secure attribute is set to true
+          sameSite: 'none',
+          maxAge: 15 * 60 * 1000, // 15 minutes
+        });
 
     res.status(200).json({
       success: true,
@@ -207,6 +236,7 @@ const refreshAccessToken = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 const getProfile = async (req, res) => {
@@ -251,6 +281,8 @@ const getProfile = async (req, res) => {
 const getOrder = async (req, res) => {
   const { role } = req.params;
   const userId = req.userId;
+  const { page = 1, limit = 10 } = req.query; // Default values for page and limit
+
   console.log(userId, 'userId');
   try {
     let userModel;
@@ -265,20 +297,48 @@ const getOrder = async (req, res) => {
     }
 
     if (user.orderHistory && user.orderHistory.length > 0) {
-      user = await userModel.populate(user, {
-        path: 'orderHistory',
-        populate: { path: 'productId sellerId courierId', select: '-password -refreshToken -email' },
-        limit: 10
+      // Calculate pagination details
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + parseInt(limit);
 
+      // Paginate the orderHistory array
+      const paginatedOrderHistory = user.orderHistory.slice(startIndex, endIndex);
+
+      user.orderHistory = await userModel.populate(
+        { orderHistory: paginatedOrderHistory },
+        {
+          path: 'orderHistory',
+          populate: {
+            path: 'productId sellerId courierId',
+            select: '-password -refreshToken -email',
+          },
+        }
+      );
+
+      // Send paginated response with meta data
+      res.status(200).json({
+        orderHistory: user.orderHistory,
+        meta: {
+          currentPage: parseInt(page),
+          totalItems: user.orderHistory.length,
+          totalPages: Math.ceil(user.orderHistory.length / limit),
+        },
       });
     } else {
       user.orderHistory = [];
+      res.status(200).json({
+        orderHistory: [],
+        meta: {
+          currentPage: parseInt(page),
+          totalItems: 0,
+          totalPages: 0,
+        },
+      });
     }
-
-    res.status(200).json({ orderHistory: user.orderHistory });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
+
 
 module.exports = { registration, login, logout, refreshAccessToken, getProfile, getOrder };

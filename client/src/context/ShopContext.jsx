@@ -1,6 +1,8 @@
 'use client';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { createContext, use, useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 // Create a Context
 const ShopContext = createContext();
@@ -10,6 +12,7 @@ export const ShopProvider = ({ children }) => {
   const [authState, setAuthState] = useState(125);
   const [Type, setType] = useState('');
   const [token, setToken] = useState(null);
+  const router = useRouter();
 
   const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Replace with your backend base URL
@@ -30,7 +33,23 @@ export const ShopProvider = ({ children }) => {
     if (usrType) {
       setType(usrType);
     }
+    refreshToken();
   }, [token, Type]);
+
+
+
+  const refreshToken = async () => {
+    try {
+      const response = await api.get(`/users/refresh`, { withCredentials: true });
+      // console.log(response,"response")
+    } catch (error) {
+      console.log(error)
+      router.push('/'); // Redirect to home page
+      setType("");
+      setToken(null);
+      localStorage.clear();
+    }
+  }
 
   // You can add more logic to manage your auth state (login, logout, etc.)
   const contain = {

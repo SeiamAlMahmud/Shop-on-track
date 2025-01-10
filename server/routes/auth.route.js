@@ -29,7 +29,7 @@ router.get('/get-data', tokenValidationMiddleware, async (req, res) => {
 
 // get profile 
 router.get('/getProfile/:role',tokenValidationMiddleware, getProfile);
-router.get('/getProfile/:role',tokenValidationMiddleware, getOrder);
+router.post('/getOrder/:role',tokenValidationMiddleware, getOrder);
 
 
 module.exports = router;
