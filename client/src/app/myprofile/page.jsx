@@ -13,7 +13,7 @@ import OrderListForCourier from "@/components/profile/OrderListForCourier";
 import toast from 'react-hot-toast';
 
 const ProfilePage = () => {
-  const { token, Type, api } = useShopContext();
+  const { token, Type, api,setType,setToken } = useShopContext();
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -37,6 +37,7 @@ const ProfilePage = () => {
       setUserProfile(response.data.user);
     } catch (error) {
       console.log(error);
+      logout();
     }
   };
 
@@ -51,6 +52,20 @@ const ProfilePage = () => {
     }
   };
 
+  const logout = async () => {
+    
+    try {
+        const response = await api.post('/users/logout')
+        router.push('/'); // Redirect to home page
+        toast.success("Logged out successfully")
+        setType("");
+        setToken(null);
+        localStorage.clear();
+    } catch (error) {
+        console.log(error)
+        toast.error("Failed to log out")
+    }
+}
   return (
     <Container>
       <div className="p-4 h-screen">

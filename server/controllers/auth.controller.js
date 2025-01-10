@@ -226,9 +226,16 @@ const getProfile = async (req, res) => {
     }
 
     if (user.orderHistory && user.orderHistory.length > 0) {
+      // Limit the number of orderHistory items
+      const limitedOrderHistory = user.orderHistory.slice(0, 10); // Limit to 10 items
+
       user = await user.populate({
         path: 'orderHistory',
-        populate: { path: 'productId sellerId courierId', select: '-password -refreshToken -email' }
+        match: { _id: { $in: limitedOrderHistory } }, // Match only the limited IDs
+        populate: {
+          path: 'productId sellerId courierId',
+          select: '-password -refreshToken -email',
+        },
       });
     } else {
       user.orderHistory = [];
@@ -238,6 +245,40 @@ const getProfile = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+
+const getOrder = async (req, res) => {
+  const { role } = req.params;
+  const userId = req.userId;
+  console.log(userId, 'userId');
+  try {
+    let userModel;
+    if (role === 'customer') userModel = customerModel;
+    else if (role === 'seller') userModel = sellerModel;
+    else if (role === 'courier') userModel = courierModel;
+    else return res.status(400).json({ message: 'Invalid role' });
+
+    let user = await userModel.findById(userId).select('orderHistory -email').lean();
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.orderHistory && user.orderHistory.length > 0) {
+      user = await userModel.populate(user, {
+        path: 'orderHistory',
+        populate: { path: 'productId sellerId courierId', select: '-password -refreshToken -email' },
+        limit: 10
+
+      });
+    } else {
+      user.orderHistory = [];
+    }
+
+    res.status(200).json({ orderHistory: user.orderHistory });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
-module.exports = { registration, login, logout, refreshAccessToken, getProfile };
+module.exports = { registration, login, logout, refreshAccessToken, getProfile, getOrder };

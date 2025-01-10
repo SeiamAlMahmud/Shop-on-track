@@ -49,6 +49,7 @@ const tokenValidationMiddleware = async (req, res, next) => {
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
+    console.log(decodedRefreshToken, "decodedRefreshToken")
     const userModel = getModelBasedOnRole(decodedRefreshToken.userType);
     const user = await userModel.findById(decodedRefreshToken.userId);
     // console.log(user, 'user');
