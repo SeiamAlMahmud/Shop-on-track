@@ -32,13 +32,13 @@ const SeparateOrderCustomer = ({ orderHistory, handlePageChange, page, totalPage
                     {/* From Uiverse.io by Ariful2634  */}
                     <button
                         onClick={() => handlePageChange(page - 1)} disabled={page === 1}
-                        class={`text-xl w-24 h-8 rounded ${page === 1 ? "bg-emerald-300" :"bg-emerald-500"} text-white relative overflow-hidden group z-10 hover:text-white duration-1000`}
+                        className={`text-xl w-24 h-8 rounded ${page === 1 ? "bg-emerald-300" :"bg-emerald-500"} text-white relative overflow-hidden group z-10 hover:text-white duration-1000`}
                     >
                         <span
-                            class="absolute bg-teal-600 w-36 h-36 rounded-full group-hover:scale-100 scale-0 -z-10 -left-2 -top-10 group-hover:duration-500 duration-700 origin-center transform transition-all"
+                            className="absolute bg-teal-600 w-36 h-36 rounded-full group-hover:scale-100 scale-0 -z-10 -left-2 -top-10 group-hover:duration-500 duration-700 origin-center transform transition-all"
                         ></span>
                         <span
-                            class="absolute bg-teal-800 w-36 h-36 -left-2 -top-10 rounded-full group-hover:scale-100 scale-0 -z-10 group-hover:duration-700 duration-500 origin-center transform transition-all"
+                            className="absolute bg-teal-800 w-36 h-36 -left-2 -top-10 rounded-full group-hover:scale-100 scale-0 -z-10 group-hover:duration-700 duration-500 origin-center transform transition-all"
                         ></span>
                         Previous
                     </button>
@@ -47,13 +47,13 @@ const SeparateOrderCustomer = ({ orderHistory, handlePageChange, page, totalPage
                     
                     <button
                         onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}
-                        class={`text-xl w-24 h-8 rounded ${page === totalPages ? "bg-emerald-300" :"bg-emerald-500"} text-white relative overflow-hidden group z-10 hover:text-white duration-1000`}
+                        className={`text-xl w-24 h-8 rounded ${page === totalPages ? "bg-emerald-300" :"bg-emerald-500"} text-white relative overflow-hidden group z-10 hover:text-white duration-1000`}
                     >
                         <span
-                            class="absolute bg-teal-600 w-36 h-36 rounded-full group-hover:scale-100 scale-0 -z-10 -left-2 -top-10 group-hover:duration-500 duration-700 origin-center transform transition-all"
+                            className="absolute bg-teal-600 w-36 h-36 rounded-full group-hover:scale-100 scale-0 -z-10 -left-2 -top-10 group-hover:duration-500 duration-700 origin-center transform transition-all"
                         ></span>
                         <span
-                            class="absolute bg-teal-800 w-36 h-36 -left-2 -top-10 rounded-full group-hover:scale-100 scale-0 -z-10 group-hover:duration-700 duration-500 origin-center transform transition-all"
+                            className="absolute bg-teal-800 w-36 h-36 -left-2 -top-10 rounded-full group-hover:scale-100 scale-0 -z-10 group-hover:duration-700 duration-500 origin-center transform transition-all"
                         ></span>
                         Next
                     </button>
