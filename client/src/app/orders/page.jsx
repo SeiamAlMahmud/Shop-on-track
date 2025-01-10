@@ -6,6 +6,7 @@ import OrderListForSeller from "@/components/profile/OrderListForSeller";
 import OrderListForCourier from "@/components/profile/OrderListForCourier";
 import { useShopContext } from "@/context/ShopContext";
 import SeparateOrderCustomer from "@/components/SeparateOrder/SeparateOrderCustomer";
+import SeparateOrderSeller from "@/components/SeparateOrder/SeparateOrderSeller";
 
 const Page = () => {
     const { token, Type, api } = useShopContext();
@@ -46,7 +47,16 @@ const Page = () => {
     };
 
 
-    
+    const updateOrderStatus = async (orderId, status) => {
+        try {
+          const response = await api.put(`/order/${orderId}/status`, { status }, { withCredentials: true });
+          toast.success('Order status updated successfully!');
+          getUserProfile(); // Refresh the profile data
+        } catch (error) {
+          console.error('Failed to update order status:', error.response?.data || error.message);
+          toast.error('Failed to update order status. Please try again.');
+        }
+      };
 
 
     const renderOrderList = () => {
@@ -63,11 +73,14 @@ const Page = () => {
                 );
             case "seller":
                 return (
-                    <OrderListForSeller
-                        orderHistory={orderHistory}
-                        type={Type}
-                        updateOrderStatus={updateOrderStatus}
-                    />
+                    <SeparateOrderSeller
+                    handlePageChange={handlePageChange}
+                    orderHistory={orderHistory}
+                    page={page}
+                    totalPages={totalPages}
+                    Type={Type}
+                    updateOrderStatus={updateOrderStatus}
+                />
                 );
             case "courier":
                 return (
