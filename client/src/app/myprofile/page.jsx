@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import OrderListForSeller from "@/components/profile/OrderListForSeller";
 import OrderListForCourier from "@/components/profile/OrderListForCourier";
 import toast from 'react-hot-toast';
+import Link from "next/link";
 
 const ProfilePage = () => {
   const { token, Type, api,setType,setToken } = useShopContext();
@@ -37,7 +38,7 @@ const ProfilePage = () => {
       setUserProfile(response.data.user);
     } catch (error) {
       console.log(error);
-      logout();
+      // logout();
     }
   };
 
@@ -94,6 +95,11 @@ const ProfilePage = () => {
         ) : (
           <></>
         )}
+        <div className="flex items-end justify-end">
+          <Link href={"/orders"}>
+          <button className="mt-5 bg-slate-500 p-1 block text-white rounded-md hover:text-blue-200 cursor-pointer px-2">See More...</button> 
+          </Link>
+          </div>
       </div>
     </Container>
   );
