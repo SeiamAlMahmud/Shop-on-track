@@ -291,12 +291,14 @@ const getOrder = async (req, res) => {
     else if (role === 'courier') userModel = courierModel;
     else return res.status(400).json({ message: 'Invalid role' });
 
-    let user = await userModel.findById(userId).select('orderHistory -email').lean();
+    // Fetch the user and select fields without mixing inclusion and exclusion
+    let user = await userModel.findById(userId).select('orderHistory').lean();
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (user.orderHistory && user.orderHistory.length > 0) {
+    const totalItems = user.orderHistory?.length || 0; // Total orders
+    if (totalItems > 0) {
       // Calculate pagination details
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + parseInt(limit);
@@ -304,28 +306,27 @@ const getOrder = async (req, res) => {
       // Paginate the orderHistory array
       const paginatedOrderHistory = user.orderHistory.slice(startIndex, endIndex);
 
+      // Populate the paginated orderHistory
       user.orderHistory = await userModel.populate(
         { orderHistory: paginatedOrderHistory },
         {
           path: 'orderHistory',
           populate: {
             path: 'productId sellerId courierId',
-            select: '-password -refreshToken -email',
+            select: '-password -refreshToken -email', // Exclude sensitive fields
           },
         }
       );
-
       // Send paginated response with meta data
       res.status(200).json({
         orderHistory: user.orderHistory,
         meta: {
           currentPage: parseInt(page),
-          totalItems: user.orderHistory.length,
-          totalPages: Math.ceil(user.orderHistory.length / limit),
+          totalItems, // Use the original length
+          totalPages: Math.ceil(totalItems / limit),
         },
       });
     } else {
-      user.orderHistory = [];
       res.status(200).json({
         orderHistory: [],
         meta: {
@@ -339,6 +340,7 @@ const getOrder = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 module.exports = { registration, login, logout, refreshAccessToken, getProfile, getOrder };
