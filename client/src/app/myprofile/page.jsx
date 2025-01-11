@@ -86,7 +86,7 @@ const ProfilePage = () => {
         {isEditing && <EditPopup onClose={closeEditPopup} type={Type} />}
 
         {/* Add Popup */}
-        { isAdding && ( <AddProductPopup onClose={closeAddingPopup} type={Type} />)}
+        {isAdding && <AddProductPopup onClose={closeAddingPopup} type={Type} />}
 
         {/* Order List */}
         {Type == 'customer' &&
