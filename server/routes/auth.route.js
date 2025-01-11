@@ -27,9 +27,8 @@ router.get('/get-data', tokenValidationMiddleware, async (req, res) => {
   return res.status(200).json({ success: true, refreshToken, userId });
 });
 
-// get profile 
-router.get('/getProfile/:role',tokenValidationMiddleware, getProfile);
-router.post('/getOrder/:role',tokenValidationMiddleware, getOrder);
-
+// get profile
+router.get('/getProfile/:role', tokenValidationMiddleware, getProfile);
+router.post('/getOrder/:role', tokenValidationMiddleware, getOrder);
 
 module.exports = router;

@@ -81,13 +81,17 @@ const login = async (req, res) => {
     // Find the user by email
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'User not found' });
     }
 
     // Compare the provided password with the hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      return res
+        .status(401)
+        .json({ success: false, message: 'Invalid credentials' });
     }
 
     // Generate tokens
@@ -113,15 +117,13 @@ const login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        accessToken,
-        refreshToken,
-        message: 'Login successful',
-        userType: role,
-      });
+    res.status(200).json({
+      success: true,
+      accessToken,
+      refreshToken,
+      message: 'Login successful',
+      userType: role,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
@@ -138,7 +140,7 @@ const logout = async (req, res) => {
     // Decode the refresh token to get user details
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const { userType } = decoded;
-    console.log(decoded, "refreshToken")
+    console.log(decoded, 'refreshToken');
 
     let userModel;
 
@@ -218,13 +220,13 @@ const refreshAccessToken = async (req, res) => {
 
     // Generate a new access token
     const accessToken = generateAccessToken(decoded, decoded.userType);
-        // Set both tokens in HTTP-only cookies
-        res.cookie('accessToken', accessToken, {
-          httpOnly: true,
-          secure: true, // Ensure secure attribute is set to true
-          sameSite: 'none',
-          maxAge: 15 * 60 * 1000, // 15 minutes
-        });
+    // Set both tokens in HTTP-only cookies
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: true, // Ensure secure attribute is set to true
+      sameSite: 'none',
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
 
     res.status(200).json({
       success: true,
@@ -237,8 +239,6 @@ const refreshAccessToken = async (req, res) => {
   }
 };
 
-
-
 const getProfile = async (req, res) => {
   const { role } = req.params;
   const userId = req.userId;
@@ -250,7 +250,9 @@ const getProfile = async (req, res) => {
     else if (role === 'courier') userModel = courierModel;
     else return res.status(400).json({ message: 'Invalid role' });
 
-    let user = await userModel.findById(userId).select('-password -refreshToken');
+    let user = await userModel
+      .findById(userId)
+      .select('-password -refreshToken');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -276,7 +278,6 @@ const getProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 const getOrder = async (req, res) => {
   const { role } = req.params;
@@ -304,7 +305,10 @@ const getOrder = async (req, res) => {
       const endIndex = startIndex + parseInt(limit);
 
       // Paginate the orderHistory array
-      const paginatedOrderHistory = user.orderHistory.slice(startIndex, endIndex);
+      const paginatedOrderHistory = user.orderHistory.slice(
+        startIndex,
+        endIndex
+      );
 
       // Populate the paginated orderHistory
       user.orderHistory = await userModel.populate(
@@ -341,6 +345,11 @@ const getOrder = async (req, res) => {
   }
 };
 
-
-
-module.exports = { registration, login, logout, refreshAccessToken, getProfile, getOrder };
+module.exports = {
+  registration,
+  login,
+  logout,
+  refreshAccessToken,
+  getProfile,
+  getOrder,
+};

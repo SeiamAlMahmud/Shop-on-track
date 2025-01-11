@@ -110,7 +110,11 @@ const CardSection = () => {
                   />
                   <h4 className="mt-2 text-lg font-medium">{product.title}</h4>
                 </Link>
-                <p className="text-gray-600 mt-3">{product.description}</p>
+                <p className="text-gray-600 mt-3">
+                  {product.description.length > 100
+                    ? `${product.description.slice(0, 100)}...`
+                    : product.description}
+                </p>
               </div>
             ))
           ) : (

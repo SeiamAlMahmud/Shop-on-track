@@ -34,7 +34,7 @@ const sellerSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order',
         required: true,
-      }
+      },
     ],
   },
   { timestamps: true }

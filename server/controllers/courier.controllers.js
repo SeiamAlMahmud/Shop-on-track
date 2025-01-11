@@ -23,7 +23,7 @@ const updateCourierProfile = async (req, res) => {
       vehicleStatus, // 'available' or 'busy'
       division, // string
       district, // string
-      subDistrict,  // string
+      subDistrict, // string
     } = req.body;
 
     const courier = await Courier.findById(courierId).select('-password');
@@ -38,7 +38,9 @@ const updateCourierProfile = async (req, res) => {
     courier.subDistrict = subDistrict;
 
     await courier.save();
-    res.status(200).json({ message: 'Courier profile updated successfully', courier });
+    res
+      .status(200)
+      .json({ message: 'Courier profile updated successfully', courier });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error });
   }

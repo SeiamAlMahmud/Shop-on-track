@@ -32,28 +32,46 @@ const AddProductPopup = ({ onClose, type }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === 'price' || name === 'weight') {
+      const numericValue = Number(value);
+      if (isNaN(numericValue) || numericValue < 0) {
+        return; // Prevent updating state with invalid input
+      }
+      return setFormData((prev) => ({ ...prev, [name]: numericValue }));
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value.toLowerCase() }));
   };
 
-  const handleSubmit = () => {
-    if (Object.keys(specificProduct).length === 0) {
-      return toast.error('Please select a product.');
+  console.log(formData);
+  const handleSubmit = async () => {
+    try {
+      if (Object.keys(specificProduct).length === 0) {
+        return toast.error('Please select a product.');
+      }
+      if (
+        !formData.weight ||
+        formData.weight === 0 ||
+        !formData.price ||
+        formData.price === 0 ||
+        !formData.division ||
+        !formData.district ||
+        !formData.subDistrict
+      ) {
+        return toast.error('Please fill all fields.');
+      }
+      formData.productId = specificProduct._id;
+      console.log('Updated data:', formData);
+
+      const response = await api.put(`/product/bid-product`, formData);
+      // Add API call here
+      toast.success('Successfully Added new Product.');
+      onClose();
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong.');
     }
-    if (
-      !formData.weight ||
-      formData.weight === 0 ||
-      !formData.price ||
-      formData.price === 0 ||
-      !formData.division ||
-      !formData.district ||
-      !formData.subDistrict
-    ) {
-      return toast.error('Please fill all fields.');
-    }
-    formData.productId = specificProduct._id;
-    console.log('Updated data:', formData);
-    // Add API call here
-    // onClose();
   };
 
   const categories = [

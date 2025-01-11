@@ -39,30 +39,40 @@ const addProductByAdmin = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Error adding product', error });
+    res
+      .status(500)
+      .json({ success: false, message: 'Error adding product', error });
   }
 };
 
-
 const updateProductBySeller = async (req, res) => {
   try {
-    const { productId, price, weight, division, district, subDistrict } = req.body;
+    const { productId, price, weight, division, district, subDistrict } =
+      req.body;
     const sellerId = req.userId; // Extract seller ID from the authenticated user
     const user = req.user; // Extract seller ID from the authenticated user
     const userType = req.role; // Extract user role
     // console.log(sellerId, userType, req.body, "req.body")
-    if (userType !== "seller") {
+    if (userType !== 'seller') {
       return res.status(401).json({
         success: false,
-        message: "Unauthorized: Only sellers can update products",
+        message: 'Unauthorized: Only sellers can update products',
       });
     }
 
     // Validate required fields
-    if (!productId || !price || !weight || !division || !district || !subDistrict) {
+    if (
+      !productId ||
+      !price ||
+      !weight ||
+      !division ||
+      !district ||
+      !subDistrict
+    ) {
       return res.status(400).json({
         success: false,
-        message: "All fields (productId, price, division, district, subDistrict) are required",
+        message:
+          'All fields (productId, price, division, district, subDistrict) are required',
       });
     }
 
@@ -75,7 +85,7 @@ const updateProductBySeller = async (req, res) => {
             sellerId,
             price,
             fullName: user.fullName,
-            fullName: user.phoneNumber,
+            phoneNumber: user.phoneNumber,
             weight,
             address: { division, district, subDistrict },
           },
@@ -87,7 +97,7 @@ const updateProductBySeller = async (req, res) => {
     if (!productUpdate) {
       return res.status(404).json({
         success: false,
-        message: "Product not found",
+        message: 'Product not found',
       });
     }
 
@@ -110,27 +120,25 @@ const updateProductBySeller = async (req, res) => {
     if (!sellerUpdate) {
       return res.status(404).json({
         success: false,
-        message: "Seller not found",
+        message: 'Seller not found',
       });
     }
 
     // Respond with success
     res.status(200).json({
       success: true,
-      message: "Product updated successfully",
+      message: 'Product updated successfully',
       product: productUpdate,
-      seller: sellerUpdate,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Error updating product",
+      message: 'Error updating product',
       error: error.message,
     });
   }
 };
-
 
 const getProduct = async (req, res) => {
   try {
@@ -138,13 +146,23 @@ const getProduct = async (req, res) => {
     const result = await Product.find({ 'sellers.isActive': true });
 
     if (!result || result.length === 0) {
-      return res.status(400).json({ success: false, message: 'No active products found.' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'No active products found.' });
     }
 
-    res.status(200).json({ success: true, message: 'Product fetched successfully', product: result });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Product fetched successfully',
+        product: result,
+      });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Error fetching products', error });
+    res
+      .status(500)
+      .json({ success: false, message: 'Error fetching products', error });
   }
 };
 const getAllProduct = async (req, res) => {
@@ -153,35 +171,62 @@ const getAllProduct = async (req, res) => {
     const result = await Product.find();
 
     if (!result || result.length === 0) {
-      return res.status(400).json({ success: false, message: 'No active products found.' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'No active products found.' });
     }
 
-    res.status(200).json({ success: true, message: 'Product fetched successfully', product: result });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Product fetched successfully',
+        product: result,
+      });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Error fetching products', error });
+    res
+      .status(500)
+      .json({ success: false, message: 'Error fetching products', error });
   }
 };
-
-
 
 const getSingleProduct = async (req, res) => {
   try {
     const { productId } = req.params;
     if (!productId) {
-      return res.status(400).json({ success: false, message: 'Product ID is required' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Product ID is required' });
     }
 
     // Fetch the product and ensure it's active
-    const product = await Product.findOne({ _id: productId, 'sellers.isActive': true });
+    const product = await Product.findOne({
+      _id: productId,
+      'sellers.isActive': true,
+    });
 
     if (!product) {
-      return res.status(400).json({ success: false, message: 'Product not found or is inactive.' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Product not found or is inactive.' });
     }
 
-    res.status(200).json({ success: true, message: 'Product fetched successfully', product });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Product fetched successfully',
+        product,
+      });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error finding specific product', error });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: 'Error finding specific product',
+        error,
+      });
   }
 };
 
@@ -192,13 +237,17 @@ const getCouriersOnBaseSeller = async (req, res) => {
     // console.log(decryptedData, "decryptedData");
 
     if (!sellerId) {
-      return res.status(400).json({ success: false, message: 'Seller ID is required' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Seller ID is required' });
     }
 
     // Fetch the seller and ensure they exist
     const seller = await Seller.findById(decryptedData.sellerId);
     if (!seller) {
-      return res.status(400).json({ success: false, message: 'Seller not found or is inactive.' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Seller not found or is inactive.' });
     }
     // console.log(seller, "seller");
 
@@ -210,13 +259,29 @@ const getCouriersOnBaseSeller = async (req, res) => {
       subDistrict,
       status: 'active',
       bookingAvailability: true,
-    }).select('-password -email -driverLicense -businessLicense -bankAccountDetails -refreshToken -vehicleRegistrationNumber');
+    }).select(
+      '-password -email -driverLicense -businessLicense -bankAccountDetails -refreshToken -vehicleRegistrationNumber'
+    );
 
-    res.status(200).json({ success: true, message: 'Couriers fetched successfully', couriers });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Couriers fetched successfully',
+        couriers,
+      });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error finding couriers', error });
+    res
+      .status(500)
+      .json({ success: false, message: 'Error finding couriers', error });
   }
 };
 
-
-module.exports = { addProductByAdmin, updateProductBySeller, getProduct, getSingleProduct, getCouriersOnBaseSeller, getAllProduct };
+module.exports = {
+  addProductByAdmin,
+  updateProductBySeller,
+  getProduct,
+  getSingleProduct,
+  getCouriersOnBaseSeller,
+  getAllProduct,
+};

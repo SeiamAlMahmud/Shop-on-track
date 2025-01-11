@@ -203,7 +203,7 @@ const SellerDetails = () => {
               </Table>
             </TableContainer>
           ) : (
-            <p>No sellers available</p>
+            <p className="text-red-500">No Couriers available</p>
           )}
         </div>
       </div>

@@ -188,7 +188,7 @@ const Page = () => {
               </Table>
             </TableContainer>
           ) : (
-            <p>No sellers available</p>
+            <p className="text-red-500">No sellers available</p>
           )}
         </div>
       </div>
