@@ -86,7 +86,7 @@ const ProfilePage = () => {
         {isEditing && <EditPopup onClose={closeEditPopup} type={Type} />}
 
         {/* Add Popup */}
-        {isAdding && <AddProductPopup onClose={closeAddingPopup} type={Type} />}
+        { isAdding && ( <AddProductPopup onClose={closeAddingPopup} type={Type} />)}
 
         {/* Order List */}
         {Type == 'customer' &&
@@ -124,7 +124,7 @@ const ProfilePage = () => {
         <div className="flex items-end justify-end">
           <Link href={'/orders'}>
             {/* From Uiverse.io by Javierrocadev  */}
-            <button className="group relative border hover:border-sky-600 duration-500 group cursor-pointer text-sky-50  overflow-hidden h-10 w-44 rounded-md bg-sky-800 p-2 flex justify-center items-center font-extrabold mt-6">
+            <button className="group relative border hover:border-sky-600 duration-500 group cursor-pointer text-sky-50  overflow-hidden h-10 w-44 rounded-md bg-sky-800 p-2 flex justify-center items-center font-extrabold mt-6 -z-20">
               <div className="absolute z-10 w-48 h-48 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-900 delay-150 group-hover:delay-75"></div>
               <div className="absolute z-10 w-40 h-40 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-800 delay-150 group-hover:delay-100"></div>
               <div className="absolute z-10 w-32 h-32 rounded-full group-hover:scale-150 transition-all  duration-500 ease-in-out bg-sky-700 delay-150 group-hover:delay-150"></div>

@@ -147,6 +147,21 @@ const getProduct = async (req, res) => {
     res.status(500).json({ success: false, message: 'Error fetching products', error });
   }
 };
+const getAllProduct = async (req, res) => {
+  try {
+    // Fetch products where at least one seller has 'isActive' set to true
+    const result = await Product.find();
+
+    if (!result || result.length === 0) {
+      return res.status(400).json({ success: false, message: 'No active products found.' });
+    }
+
+    res.status(200).json({ success: true, message: 'Product fetched successfully', product: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error fetching products', error });
+  }
+};
 
 
 
@@ -204,4 +219,4 @@ const getCouriersOnBaseSeller = async (req, res) => {
 };
 
 
-module.exports = { addProductByAdmin, updateProductBySeller, getProduct, getSingleProduct, getCouriersOnBaseSeller };
+module.exports = { addProductByAdmin, updateProductBySeller, getProduct, getSingleProduct, getCouriersOnBaseSeller, getAllProduct };
