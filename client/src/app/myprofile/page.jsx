@@ -12,12 +12,14 @@ import OrderListForSeller from '@/components/profile/OrderListForSeller';
 import OrderListForCourier from '@/components/profile/OrderListForCourier';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
+import AddProductPopup from '@/components/profile/AddProductPopup';
 
 const ProfilePage = () => {
   const { token, Type, api, setType, setToken } = useShopContext();
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
 
   const handleEdit = () => {
@@ -26,6 +28,13 @@ const ProfilePage = () => {
 
   const closeEditPopup = () => {
     setIsEditing(false);
+  };
+  const handleAdd = () => {
+    setIsAdding(true);
+  };
+
+  const closeAddingPopup = () => {
+    setIsAdding(false);
   };
 
   useEffect(() => {
@@ -66,7 +75,7 @@ const ProfilePage = () => {
     <Container>
       <div className="p-4 h-screen">
         {/* Profile Header */}
-        <ProfileHeader type={Type} onEdit={handleEdit} />
+        <ProfileHeader type={Type} onEdit={handleEdit} onAdd={handleAdd} />
 
         {/* Profile Details */}
         {userProfile && (
@@ -75,6 +84,9 @@ const ProfilePage = () => {
 
         {/* Edit Popup */}
         {isEditing && <EditPopup onClose={closeEditPopup} type={Type} />}
+
+        {/* Add Popup */}
+        {isAdding && <AddProductPopup onClose={closeAddingPopup} type={Type} />}
 
         {/* Order List */}
         {Type == 'customer' &&
