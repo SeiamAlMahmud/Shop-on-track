@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useShopContext } from "@/context/ShopContext";
 
 const categories = [
     { id: 1, name: "Honey", icon: "https://i.ibb.co/XCM2bhM/Baby-food.png" },
@@ -15,16 +16,16 @@ const categories = [
 ];
 
 const Page = () => {
+    const { token, Type, api, setType, setToken } = useShopContext();
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [productData, setProductData] = useState({
         title: "",
         description: "",
         category: "",
-        price: "",
+        // price: "",
         image: null,
     });
-    const router = useRouter();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -43,7 +44,7 @@ const Page = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`/users/login/admin`, formData);
+            const response = await api.post(`/users/login/admin`, formData);
             if (response.data.success) {
                 toast.success("Login successful!");
                 setIsLoggedIn(true);
@@ -62,12 +63,12 @@ const Page = () => {
             formData.append("title", productData.title);
             formData.append("description", productData.description);
             formData.append("category", productData.category);
-            formData.append("price", productData.price);
+            // formData.append("price", productData.price);
             if (productData.image) {
                 formData.append("image", productData.image);
             }
 
-            const response = await axios.post("/product/add-product", formData, {
+            const response = await api.post("/product/add-product", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -79,7 +80,7 @@ const Page = () => {
                     title: "",
                     description: "",
                     category: "",
-                    price: "",
+                    // price: "",
                     image: null,
                 });
             } else {
@@ -186,7 +187,7 @@ const Page = () => {
                                     ))}
                                 </select>
                             </div>
-                            <div>
+                            {/* <div>
                                 <label htmlFor="price" className="text-sm font-medium text-gray-700">Product Price</label>
                                 <input
                                     name="price"
@@ -198,7 +199,7 @@ const Page = () => {
                                     className="mt-1 bg-gray-100 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:ring focus:ring-blue-200"
                                     placeholder="Product Price"
                                 />
-                            </div>
+                            </div> */}
                             <div>
                                 <label htmlFor="image" className="text-sm font-medium text-gray-700">Product Image</label>
                                 <input
