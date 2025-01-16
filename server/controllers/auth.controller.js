@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const courierModel = require('../models/courier.model');
 const customerModel = require('../models/customer.model');
 const sellerModel = require('../models/seller.model');
+const adminModel = require('../models/admin.model');
 const bcrypt = require('bcrypt');
 const {
   generateAccessToken,
@@ -20,6 +21,7 @@ const registration = async (req, res) => {
     if (role === 'customer') userModel = customerModel;
     else if (role === 'seller') userModel = sellerModel;
     else if (role === 'courier') userModel = courierModel;
+    else if (role === 'admin') userModel = adminModel;
     else return res.status(400).json({ message: 'Invalid role' });
 
     const user = new userModel({ email, password, ...otherData });
@@ -76,6 +78,7 @@ const login = async (req, res) => {
     if (role === 'customer') userModel = customerModel;
     else if (role === 'seller') userModel = sellerModel;
     else if (role === 'courier') userModel = courierModel;
+    else if (role === 'admin') userModel = adminModel;
     else return res.status(400).json({ message: 'Invalid role' });
 
     // Find the user by email
