@@ -170,7 +170,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center mt-7">
+    <div className="flex justify-center mt-7 mb-6">
       <Tabs
         defaultValue="customer"
         className="w-[800px]"
