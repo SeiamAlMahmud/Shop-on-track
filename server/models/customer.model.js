@@ -17,8 +17,10 @@ const customerSchema = new mongoose.Schema(
     refreshToken: { type: String },
     orderHistory: [
       {
-        orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
-      }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order',
+        required: true,
+      },
     ],
   },
   { timestamps: true }
@@ -27,6 +29,14 @@ const customerSchema = new mongoose.Schema(
 customerSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+// Ensure orderHistory is initialized as an empty array
+customerSchema.pre('save', function (next) {
+  if (!this.orderHistory) {
+    this.orderHistory = [];
+  }
   next();
 });
 

@@ -34,7 +34,7 @@ const getModelBasedOnRole = (role) => {
 
 const tokenValidationMiddleware = async (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
-  console.log(accessToken, "accessToken", refreshToken, "refreshToken");
+  console.log(accessToken, 'accessToken', refreshToken, 'refreshToken');
   try {
     // Check if both tokens are present
     if (!refreshToken) {
@@ -49,6 +49,7 @@ const tokenValidationMiddleware = async (req, res, next) => {
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
+    console.log(decodedRefreshToken, 'decodedRefreshToken');
     const userModel = getModelBasedOnRole(decodedRefreshToken.userType);
     const user = await userModel.findById(decodedRefreshToken.userId);
     // console.log(user, 'user');
@@ -71,7 +72,7 @@ const tokenValidationMiddleware = async (req, res, next) => {
         req.role = decodedAccessToken.userType || decodedRefreshToken.userType; // Attach user role to the request
         return next();
       } catch (err) {
-        console.log(err, 'tokenValidationMiddleware');	
+        console.log(err, 'tokenValidationMiddleware');
         // If access token is invalid, fall back to refresh token validation
         if (err.name !== 'TokenExpiredError') {
           return res.status(403).json({ message: 'Invalid access token.' });
@@ -88,12 +89,16 @@ const tokenValidationMiddleware = async (req, res, next) => {
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
-    req.user = { userId: user._id, role: decodedRefreshToken.role, fullName: decodedRefreshToken.fullName || ""}; // Attach user info to the request
+    req.user = {
+      userId: user._id,
+      role: decodedRefreshToken.role,
+      fullName: decodedRefreshToken.fullName || '',
+    }; // Attach user info to the request
     req.userId = user._id;
     req.role = decodedRefreshToken.userType; // Attach user role to the request
     next();
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({
       message: 'Token validation failed. Please log in again.',
       error: error,

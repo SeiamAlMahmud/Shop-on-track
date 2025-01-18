@@ -2,10 +2,27 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema(
   {
-    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-    sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Seller', required: true },
-    customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
-    courierId: { type: mongoose.Schema.Types.ObjectId, ref: 'Courier', required: true },
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true,
+    },
+    title: { type: String, required: true }, // Change to String
+    sellerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Seller',
+      required: true,
+    },
+    customerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Customer',
+      required: true,
+    },
+    courierId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Courier',
+      required: true,
+    },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
     orderDate: { type: Date, default: Date.now, required: true },
@@ -17,11 +34,12 @@ const orderSchema = new mongoose.Schema(
         const deliveryDays = Math.floor(Math.random() * 5) + 3; // Random number between 3 and 7
         orderDate.setDate(orderDate.getDate() + deliveryDays);
         return orderDate;
-      }
+      },
     },
     status: {
-      type: String, enum: ['pending', 'shipped', 'delivered', 'cancelled'],
-      default: 'pending'
+      type: String,
+      enum: ['pending', 'shipped', 'delivered', 'cancelled'],
+      default: 'pending',
     },
     deliveryCharge: { type: Number, required: true },
     netAmount: { type: Number, default: 10 },

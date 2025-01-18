@@ -1,10 +1,11 @@
 'use client';
 import Select from '@/components/Select';
 import Link from 'next/link';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useShopContext } from '@/context/ShopContext';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const page = () => {
   const router = useRouter();
@@ -53,17 +54,17 @@ const page = () => {
         setToken(response.data.token);
         localStorage.setItem('userType', response.data.userType);
         localStorage.setItem('token', response.data.accessToken);
+        toast.success('Login successful!');
         router.push('/');
       }
-
-      alert('Login successful!');
-      // Handle successful login (e.g., redirect to dashboard, store token, etc.)
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
-      alert('Login failed! Please try again.');
+      toast.error(
+        error.response?.data?.message || 'Login failed! Please try again.'
+      );
     }
   };
-  console.log(Type);
+
   return (
     <div className="flex justify-center items-center bg-gray-100 font-[sans-serif] h-full md:min-h-screen p-4">
       <div className="grid justify-center max-w-md mx-auto">

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const EditPopup = ({ onClose, type }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    ...(type === "seller" && { shop: "" }),
-    ...(type === "customer" && { address: "" }),
-    ...(type === "courier" && { vehicle: "" }),
+    name: '',
+    email: '',
+    ...(type === 'seller' && { shop: '' }),
+    ...(type === 'customer' && { address: '' }),
+    ...(type === 'courier' && { vehicle: '' }),
   });
 
   const handleInputChange = (e) => {
@@ -16,7 +16,7 @@ const EditPopup = ({ onClose, type }) => {
 
   const handleSubmit = () => {
     // Handle submission logic here
-    console.log("Updated data:", formData);
+    console.log('Updated data:', formData);
     onClose();
   };
 
@@ -41,7 +41,7 @@ const EditPopup = ({ onClose, type }) => {
             placeholder="Email"
             className="w-full p-2 border rounded-md"
           />
-          {type === "seller" && (
+          {type === 'seller' && (
             <input
               type="text"
               name="shop"
@@ -51,7 +51,7 @@ const EditPopup = ({ onClose, type }) => {
               className="w-full p-2 border rounded-md"
             />
           )}
-          {type === "customer" && (
+          {type === 'customer' && (
             <input
               type="text"
               name="address"
@@ -61,7 +61,7 @@ const EditPopup = ({ onClose, type }) => {
               className="w-full p-2 border rounded-md"
             />
           )}
-          {type === "courier" && (
+          {type === 'courier' && (
             <input
               type="text"
               name="vehicle"
