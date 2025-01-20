@@ -5,9 +5,9 @@ import { BsInstagram, BsLinkedin, BsTwitter } from 'react-icons/bs';
 const Footer = () => {
   return (
     <div>
-    <footer id="contact" className="bg-green-700 text-white mt-8 ">
+    <footer className="bg-green-700 text-white mt-8 ">
         <div className="container mx-auto flex flex-wrap justify-between py-8 px-6 space-y-6 md:space-y-0">
-            <div className="min-w-[200px]">
+            <div className="min-w-[200px]"  id="about">
                 <h3 className="text-lg font-bold mb-2">About Us</h3>
                 <p className="text-sm">Your one-stop shop for fresh vegetables, fruits, and essentials delivered straight to your home.</p>
             </div>
@@ -19,7 +19,7 @@ const Footer = () => {
                     <li><a href="faq.html" className="hover:underline">FAQ</a></li>
                 </ul>
             </div>
-            <div className="min-w-[200px]">
+            <div className="min-w-[200px]"  id="contact">
                 <h3 className="text-lg font-bold mb-2">Contact Us</h3>
                 <p className="text-sm">Email: support@shopontrack.com</p>
                 <p className="text-sm">Phone: +123-456-7890</p>
