@@ -5,51 +5,38 @@ import { BsInstagram, BsLinkedin, BsTwitter } from 'react-icons/bs';
 const Footer = () => {
   return (
     <div>
-      <footer className="bg-[#0a0e2c] text-white boxShadow rounded-2xl rounded-b-none w-full p-6 lg:p-9">
-        <div className="flex justify-center gap-[30px] flex-wrap w-full sm:px-32">
-          <div className="flex justify-center sm:justify-between gap-[30px] w-full flex-wrap">
-            <p className="text-[0.9rem] text-text hover:text-primary cursor-pointer transition-all duration-200">
-              Service
-            </p>
-            <p className="text-[0.9rem] text-text hover:text-primary cursor-pointer transition-all duration-200">
-              Features
-            </p>
-            <p className="text-[0.9rem] text-text hover:text-primary cursor-pointer transition-all duration-200">
-              Our Team
-            </p>
-            <p className="text-[0.9rem] text-text hover:text-primary cursor-pointer transition-all duration-200">
-              Portfolio
-            </p>
-            <p className="text-[0.9rem] text-text hover:text-primary cursor-pointer transition-all duration-200">
-              Blog
-            </p>
-            <p className="text-[0.9rem] text-text hover:text-primary cursor-pointer transition-all duration-200">
-              Contact Us
-            </p>
-          </div>
-
-          <div className="flex items-center flex-wrap gap-[10px] text-text">
-            <a className="text-[1.3rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-primary transition-all duration-300">
-              <CgFacebook />
-            </a>
-            <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-primary transition-all duration-300">
-              <BsTwitter />
-            </a>
-            <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-primary transition-all duration-300">
-              <BsInstagram />
-            </a>
-            <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-primary transition-all duration-300">
-              <BsLinkedin />
-            </a>
-          </div>
-
-          <div className="border-t border-gray-200 pt-[20px] flex items-center w-full flex-wrap gap-[20px] justify-center">
-            <p className="text-[0.8rem] sm:text-[0.9rem] text-gray-600">
-              © 2024 ZenUI Library. All Rights Reserved.{' '}
-            </p>
-          </div>
+    <footer className="bg-green-700 text-white mt-8 ">
+        <div className="container mx-auto flex flex-wrap justify-between py-8 px-6 space-y-6 md:space-y-0">
+            <div className="min-w-[200px]">
+                <h3 className="text-lg font-bold mb-2">About Us</h3>
+                <p className="text-sm">Your one-stop shop for fresh vegetables, fruits, and essentials delivered straight to your home.</p>
+            </div>
+            <div className="min-w-[200px]">
+                <h3 className="text-lg font-bold mb-2">Quick Links</h3>
+                <ul className="text-sm space-y-2">
+                    <li><a href="privacy.html" className="hover:underline">Privacy Policy</a></li>
+                    <li><a href="terms.html" className="hover:underline">Terms & Conditions</a></li>
+                    <li><a href="faq.html" className="hover:underline">FAQ</a></li>
+                </ul>
+            </div>
+            <div className="min-w-[200px]">
+                <h3 className="text-lg font-bold mb-2">Contact Us</h3>
+                <p className="text-sm">Email: support@shopontrack.com</p>
+                <p className="text-sm">Phone: +123-456-7890</p>
+            </div>
+            <div className="min-w-[200px]">
+                <h3 className="text-lg font-bold mb-2">Follow Us</h3>
+                <div className="flex space-x-4">
+                    <a href="#" className="text-white text-xl hover:text-gray-300"><i className="fab fa-facebook"></i></a>
+                    <a href="#" className="text-white text-xl hover:text-gray-300"><i className="fab fa-twitter"></i></a>
+                    <a href="#" className="text-white text-xl hover:text-gray-300"><i className="fab fa-instagram"></i></a>
+                </div>
+            </div>
         </div>
-      </footer>
+        <div className="bg-green-800 text-center py-4">
+            <p className="text-sm">&copy; 2025 Shop On Track. All Rights Reserved.</p>
+        </div>
+    </footer>
     </div>
   );
 };
