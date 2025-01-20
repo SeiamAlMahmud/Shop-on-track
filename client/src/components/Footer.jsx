@@ -5,7 +5,7 @@ import { BsInstagram, BsLinkedin, BsTwitter } from 'react-icons/bs';
 const Footer = () => {
   return (
     <div>
-    <footer className="bg-green-700 text-white mt-8 ">
+    <footer id="contact" className="bg-green-700 text-white mt-8 ">
         <div className="container mx-auto flex flex-wrap justify-between py-8 px-6 space-y-6 md:space-y-0">
             <div className="min-w-[200px]">
                 <h3 className="text-lg font-bold mb-2">About Us</h3>

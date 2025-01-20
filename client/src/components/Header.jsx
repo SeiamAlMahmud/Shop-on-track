@@ -47,10 +47,10 @@ const ResponsiveNavbar = () => {
             <div className="container mx-auto">
                 <ul className="flex justify-center space-x-6 py-3">
                     <li><Link href="/" className="text-white font-bold hover:underline">Home</Link></li>
-                    <li><Link href="/" className="text-white font-bold hover:underline">Shop</Link></li>
+                    {/* <li><Link href="/" className="text-white font-bold hover:underline">Shop</Link></li> */}
                     <li><Link href="/" className="text-white font-bold hover:underline">Offers</Link></li>
-                    <li><Link href="/" className="text-white font-bold hover:underline">Contact</Link></li>
-                    <li><Link href="/" className="text-white font-bold hover:underline">About Us</Link></li>
+                    <li><Link href="#contact" className="text-white font-bold hover:underline">Contact</Link></li>
+                    <li><Link href="#contact" className="text-white font-bold hover:underline">About Us</Link></li>
                 </ul>
             </div>
         </nav>
