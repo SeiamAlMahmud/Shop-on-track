@@ -16,8 +16,48 @@ const ResponsiveNavbar = () => {
   const { token } = useShopContext();
 
   return (
-    <Container>
-      <nav className="flex items-center justify-between w-full relative bg-white boxShadow rounded-full px-[10px] py-[8px]">
+    <div>
+          <header className="bg-gradient-to-r from-green-600 to-green-700 text-white">
+        <div className="container mx-auto flex justify-between items-center py-4 px-6">
+            <div className="text-xl font-bold">
+                <Link href="/" className="hover:underline">Shop On Track</Link>
+            </div>
+            <div className="flex flex-1 mx-4">
+                <input 
+                    type="text" 
+                    placeholder="Search for fresh produce..." 
+                    className="flex-grow p-2 rounded-l-md border-none focus:ring focus:ring-green-500"
+                />
+                <button 
+                    type="submit" 
+                    className="px-4 py-2 bg-green-700 text-white rounded-r-md hover:bg-green-800">
+                    <i className="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+            <div className="flex items-center space-x-4 ml-6">
+               {
+               token ? (
+                <Badge />
+              ) : ( <Link href="/auth/login" className="hover:underline">Login</Link> 
+               )}
+            </div>
+        </div>
+        <nav className="bg-green-800">
+            <div className="container mx-auto">
+                <ul className="flex justify-center space-x-6 py-3">
+                    <li><Link href="/" className="text-white font-bold hover:underline">Home</Link></li>
+                    <li><Link href="/" className="text-white font-bold hover:underline">Shop</Link></li>
+                    <li><Link href="/" className="text-white font-bold hover:underline">Offers</Link></li>
+                    <li><Link href="/" className="text-white font-bold hover:underline">Contact</Link></li>
+                    <li><Link href="/" className="text-white font-bold hover:underline">About Us</Link></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    {/* old code  */}
+      {/* <nav className="flex items-center justify-between w-full relative bg-white boxShadow rounded-full px-[10px] py-[8px]">
         <Link href="/">
           <Image
             width={55}
@@ -83,8 +123,8 @@ const ResponsiveNavbar = () => {
             </li>
           </ul>
         </aside>
-      </nav>
-    </Container>
+      </nav> */}
+    </div>
   );
 };
 
