@@ -60,7 +60,7 @@ const Badge = () => {
       {/* Dropdown */}
       {isDropdownOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-md z-50">
-          <ul className="py-2">
+          <ul className="py-2 text-black">
             <Link href={'/myprofile'}>
               {' '}
               <li
